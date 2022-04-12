@@ -2,20 +2,22 @@
 #include <Vector>
 #include "Types.h"
 
+//standardized the code for properties, variable names and functions.
+
 class Grid
 {
 
 public:
-
-    Grid(int Lines, int Columns);
+    //changed variable names to C++ standards
+    Grid(int lines, int columns);
     ~Grid();
 
     std::vector<Types::GridBox> grids;
 
-    int xLenght;
-    int yLength;
+    int x_length; //fixed typo here
+    int y_length;
     
-    // prints the matrix that indicates the tiles of the battlefield
-    void drawBattlefield(int Lines, int Columns);
+    //Removed dr
+     //changed variable names to C++ standards
 };
 

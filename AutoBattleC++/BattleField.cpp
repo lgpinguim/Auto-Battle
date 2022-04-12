@@ -1,202 +1,97 @@
 #include "Grid.h"
-#include "BattleField.h"
+#include "Battlefield.h"
 #include "Types.h"
 #include "Character.h"
 #include <iostream>
-#include "BattleField.h"
-#include <list>
-#include <string>
+
+
+#include "Shared.h"
 
 using namespace std;
 
-BattleField::BattleField() {
-    
-    grid = new Grid(5, 5);
-    AllPlayers = new list<Character>();
-    int currentTurn = 0;
-    int numberOfPossibleTiles = grid->grids.size();
-    Setup();
-}
-
-void BattleField::Setup()
-{
-  
-   
-    GetPlayerChoice();
-}
-
-void BattleField::GetPlayerChoice()
-{
-    //asks for the player to choose between for possible classes via console.
-    printf("Choose Between One of this Classes:\n");
-
-    printf("[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer");
-    //store the player choice in a variable
-    std::string choice;
-
-    std::getline(std::cin, choice);
-    
-    cin >> choice;
-    switch ((choice))
-    {
-    case "1":
-        CreatePlayerCharacter(choice);
-        break;
-    case "2":
-        CreatePlayerCharacter(choice);
-        break;
-    case "3":
-        CreatePlayerCharacter(choice);
-        break;
-    case "4":
-        CreatePlayerCharacter(choice);
-        break;
-    default:
-        GetPlayerChoice();
-        break;
-    }
-}
-
-void BattleField::CreatePlayerCharacter(int classIndex)
+Battlefield::Battlefield() : grid(nullptr)
 {
 
-    Types::CharacterClass* characterClass = (Types::CharacterClass*)classIndex;
-    printf("Player Class Choice: {characterClass}");
-    
-    PlayerCharacter = std::make_shared<Character>(characterClass);
-    
-    PlayerCharacter->Health = 100;
-    PlayerCharacter->BaseDamage = 20;
-    PlayerCharacter->PlayerIndex = 0;
-
-    CreateEnemyCharacter();
-
 }
 
-void BattleField::CreateEnemyCharacter()
+//removed Get player choice, there is no need to have that here, as I created a classto handle the game turns
+
+//removed Create Player Character, there is no need to have that here, only the Character class
+//should create new characters;
+
+//removed Create Enemy Character, there is no need to have that here, only the Character class
+//should create new characters;
+
+//removed start turn, as I created a Turn handler for handling the flow of the game;
+
+//removed start turn, as I created a Turn handler for handling the flow of the game;
+
+//removed handle turn, as I created a Turn handler for handling the flow of the game;
+
+//Removed get random int, as it was a malpractice 
+
+Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 {
-    //randomly choose the enemy class and set up vital variables
-    
-    int randomInteger = GetRandomInt(1, 4);
-    Types::CharacterClass enemyClass = (Types::CharacterClass)randomInteger;
-    printf("Enemy Class Choice: {enemyClass}");
-    EnemyCharacter = new Character(enemyClass);
-    EnemyCharacter->Health = 100;
-    PlayerCharacter->BaseDamage = 20;
-    PlayerCharacter->PlayerIndex = 1;
-    StartGame();
-
+	const auto newGrid = new Grid(Lines, Columns);
+	std::cout << "\nThe battlefield has been created\n";
+	this->setGrid(newGrid);
+	this->number_of_possible_tiles = newGrid->x_length * newGrid->y_length;
+	return newGrid;
 }
 
-void BattleField::StartGame()
+
+
+//Removed both Alocate player and enemy functions, created a generic alocate function
+void Battlefield::AlocatePlayer(Character* player)
 {
-    //populates the character variables and targets
-    EnemyCharacter->target = PlayerCharacter;
-    PlayerCharacter->target = EnemyCharacter;
-    AllPlayers->push_back(PlayerCharacter);
-    AllPlayers->push_back(EnemyCharacter);
-    AlocatePlayers();
-    StartTurn();
-
+	Shared util;
+	const int random = util.GetRandomInt(0, grid->grids.size());
+	auto l_front = grid->grids.begin();
+	advance(l_front, random);
+	const Types::GridBox* RandomLocation = &*l_front;
+	if (!RandomLocation->occupied)
+	{
+		index_location_of_each_player.push_back(l_front->index);
+		l_front->occupied = true;
+		player->current_box = *l_front;
+	}
+	else
+	{
+		AlocatePlayer(player);
+	}
 }
 
-void BattleField::StartTurn() {
 
-    if (currentTurn == 0)
-    {
-        //AllPlayers.Sort();  
-    }
-    std::list<Character>::iterator it;
-
-    for (it = AllPlayers->begin(); it != AllPlayers->end(); ++it) {
-        it->StartTurn(grid);
-    }
-
-    currentTurn++;
-    HandleTurn();
-}
-
-void BattleField::HandleTurn()
+//This was the function from GRID, here it makes more sense.
+//I also refactored the method so we can see the icon of each Character class.
+void Battlefield::DrawBattlefield(std::vector<Character*> all_players)
 {
-    if (PlayerCharacter->Health == 0)
-    {
-        return;
-    }
-    else if (EnemyCharacter->Health == 0)
-    {
-        printf("\n");
+	int index = 0;
 
-        // endgame?
+	for (int i = 0; i < this->grid->x_length; i++)
+	{
+		for (int j = 0; j < this->grid->y_length; j++)
+		{
+			const Types::GridBox currentGrid = grid->grids[index]; //fixed typo on variable name
 
-        printf("\n");
+			if (currentGrid.occupied)
+			{
+				for (auto player : all_players)
+				{
+					if (player->current_box.index == currentGrid.index)
+					{
+						cout << "[" << player->icon << "]\t";
+					}
+				}
+			}
+			else
+			{
+				cout << "[ ]\t";
+			}
 
-        return;
-    }
-    else
-    {
-        printf("\n");
-        printf("Click on any key to start the next turn...\n");
-        printf("\n");
-
-        //TODO
-        //ConsoleKeyInfo key = Console.ReadKey();
-        StartTurn();
-    }
-}
-
-int BattleField::GetRandomInt(int min, int max)
-{
-    
-    int index = GetRandomInt(min, max);
-    return index;
-}
-
-void BattleField::AlocatePlayers()
-{
-    AlocatePlayerCharacter();
-
-}
-
-void BattleField::AlocatePlayerCharacter()
-{
-    int random = 0;
-    auto l_front = grid->grids.begin();
-    advance(l_front, random);
-    Types::GridBox* RandomLocation = &*l_front;
-
-    if (!RandomLocation->ocupied)
-    {
-        //Types::GridBox* PlayerCurrentLocation = RandomLocation;
-        PlayerCurrentLocation = &*l_front;
-        l_front->ocupied = true;
-        PlayerCharacter->currentBox = *l_front;
-        AlocateEnemyCharacter();
-    }
-    else
-    {
-        AlocatePlayerCharacter();
-    }
-}
-
-void BattleField::AlocateEnemyCharacter()
-{
-    
-    int random = 24;
-    auto l_front = grid->grids.begin();
-    advance(l_front, random);
-    Types::GridBox* RandomLocation = &*l_front;
-    
-    if (!RandomLocation->ocupied)
-    {
-        EnemyCurrentLocation = &*l_front;
-        l_front->ocupied = true;
-        EnemyCharacter->currentBox = *l_front;
-        grid->drawBattlefield(5, 5);
-    }
-    else
-    {
-        AlocateEnemyCharacter();
-    }
-
-
+			index++;
+		}
+		printf("\n");
+	}
+	printf("\n");
 }

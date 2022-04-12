@@ -1,48 +1,47 @@
 #pragma once
 #include "Character.h"
-#include "Types.h"
 #include <list>
-#include <iostream>
 #include "Grid.h"
-using namespace std;
-class BattleField
+#include "TurnHandler.h"
+
+//Removed the namespace reference, using it in the header file could cause problems, it is a good practice to avoid this.
+class Battlefield //fixed typo on name
 {
 public:
 
-	BattleField();
+	Battlefield();
 
-	Grid* grid;
-	Types::GridBox* PlayerCurrentLocation;
-	Types::GridBox* EnemyCurrentLocation;
-	list<Character>* AllPlayers;
-	shared_ptr<Character> PlayerCharacter;
-	//Character* PlayerCharacter;
-	shared_ptr<Character>* EnemyCharacter;
-	int currentTurn;
-	int numberOfPossibleTiles;
+	// fixed naming conventions on the properties of this class.
+	Grid* grid{};
 
+	//Removed the the variables that represent the player and enemy location
 
-	void Setup();
+	//A vector that will store the index location of each player.
+	std::vector<int> index_location_of_each_player;
 
-	void GetPlayerChoice();
+	//there is no need to have a pointer to each player when we have a list of all players that we could iterate as needed.
+	// removed number of turns from battlefield.
+	int number_of_possible_tiles{};
 
-	void CreatePlayerCharacter(int classIndex);
+	//removed the turn handling from battlefield, so we can follow clean code practices 
 
-	void CreateEnemyCharacter();
+	//removed creation of characters from battlefield class.
 
-	void StartGame();
+	//Removed class that violated clean code standards
 
-	void StartTurn();
+	//Added Function for battlefield creation
 
-	void HandleTurn();
+	void setGrid(Grid* g)
+	{
+		grid = g;
+	}
 
-	int GetRandomInt(int min, int max);
+	Grid* CreateBattleField(int Lines, int Columns);
 
-	void AlocatePlayers();
+	//We should have only one function for player alocation.
+	void AlocatePlayer(Character* player);
 
-	void AlocatePlayerCharacter();
-
-	void AlocateEnemyCharacter();
+	void DrawBattlefield(std::vector<Character*> all_players);
 };
 
 

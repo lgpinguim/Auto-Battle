@@ -2,47 +2,19 @@
 #include "Types.h"
 
 
-Grid::Grid(int Lines, int Columns)
+Grid::Grid(int lines, int columns) : x_length(lines), y_length(columns)
 {
-    xLenght = Lines;
-    yLength = Columns;
-    //Console.WriteLine("The battle field has been created\n");
-    for (int i = 0; i < Lines; i++)
-    {
-
-        for (int j = 0; j < Columns; j++)
-        {
-            Types::GridBox* newBox = new Types::GridBox(i, j, false, (Columns * i + j));
-            grids.insert(grids.end(), newBox);
-            //Console.Write($"{newBox.Index}\n");
-        }
-    }
-	//drawBattlefield(Lines, Columns);
+	//Organized the function for better readability and fixed possible errors.
+	for (int i = 0; i < x_length; i++)
+	{
+		for (int j = 0; j < y_length; j++)
+		{
+			auto newBox = Types::GridBox(j, i, false, (y_length * i + j));
+			grids.push_back(newBox);
+		}
+	}
 }
 
-Grid::~Grid() 
-{
-
-}
-
-void Grid::drawBattlefield(int Lines, int Columns)
-{
-    for (int i = 0; i < Lines; i++)
-    {
-        for (int j = 0; j < Columns; j++)
-        {
-            Types::GridBox* currentgrid = new Types::GridBox();
-            if (currentgrid->ocupied)
-            {
-                //if()
-                printf("[X]\t");
-            }
-            else
-            {
-                printf("[ ]\t");
-            }
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+//modernized destructor.
+Grid::~Grid()
+= default;
