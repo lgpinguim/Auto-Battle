@@ -5,10 +5,10 @@ public:
     //standardized the code for properties, variable names and functions.
     struct GridBox
     {
-        int x_index;
-        int y_index;
-        bool occupied;
-        int index;
+        int x_index{};
+        int y_index{};
+        bool occupied{};
+        int index{};
 
         GridBox(int x, int y, bool occupied, int index)
         {
@@ -17,6 +17,10 @@ public:
             occupied = occupied;
             index = index;
         }
+
+        GridBox() = default;
+
+
     };
 
     enum CharacterClass

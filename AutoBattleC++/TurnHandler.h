@@ -6,6 +6,7 @@ class Character;
 
 class TurnHandler
 {
+public:
 	//Created this class to beter segregate the responsibilities between classes
 	//This class will be responsible for handling the turns of the game.
 

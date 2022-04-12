@@ -2,6 +2,7 @@
 //added string include, se the string class can be used.
 #include <string>
 
+#include "Battlefield.h"
 #include "Grid.h"
 #include "Character.h"
 #include "Types.h"
@@ -26,8 +27,8 @@ public:
 	Types::CharacterClass character_class;
 	int player_index{};
 	Character* target{};
-	bool is_dead{};
-	char icon{};
+	bool is_dead{false};
+	char icon{'X'};
 
 	
 	// this class should not be anywhere else, we should only create characters using the character class
@@ -41,17 +42,13 @@ public:
 
 	//deleted move to function, it was not implemented or used anywhere 
 
-	bool CheckCloseTargets(Grid* battlefield);
+	bool CheckCloseTargets(Grid* battlefield) const;
 
-	void MoveToEnemy();
+	void MoveToEnemy(Battlefield* battlefield);
 
-	void Attack(Character* target);
+	void Attack() const;
 
 
 };
 
-inline int Character::GetIndex(std::vector<Types::GridBox*> v, int index)
-{
-	return 0;
-}
 
