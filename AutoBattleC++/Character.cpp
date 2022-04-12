@@ -14,7 +14,7 @@ Character::Character()
 Character::~Character()
 = default;
 
-int Character::ValidateClassInput()
+int Character::ValidateClassInput() const
 {
 	//asks for the player to choose between for possible classes via console.
 	std::cout << "Choose Between One of this Classes:\n";
@@ -29,8 +29,6 @@ int Character::ValidateClassInput()
 	while (classIndex > 4 || classIndex <= 0)
 	{
 		std::cout << "invalid class number input, please try again: \n";
-		std::string choice;
-
 		getline(std::cin, choice);
 
 		if (!choice.empty())
@@ -42,7 +40,7 @@ int Character::ValidateClassInput()
 	return classIndex;
 }
 
-std::string Character::CreateCharacterName()
+std::string Character::CreateCharacterName() const
 {
 	std::string name;
 
@@ -61,7 +59,7 @@ std::string Character::CreateCharacterName()
 
 Character* Character::CreateCharacter(int classIndex, std::string name, int player_index)
 {
-	auto character = new Character();
+	const auto character = new Character();
 
 	//fixed the switch, so we are comparing numbers, not strings.
 	switch (classIndex)
@@ -94,7 +92,7 @@ Character* Character::CreateCharacter(int classIndex, std::string name, int play
 		}
 	case 3:
 		{
-			//clerics have higer critical damage
+			//clerics have hihger critical damage
 			character->health = 100;
 			character->base_damage = 15;
 			character->player_index = player_index;
@@ -146,13 +144,13 @@ void Character::Die()
 //In this function we first define who is our character and where he is, after that we get a occupied GridBox index and check if there is any around our character that is occupied.
 bool Character::CheckCloseTargets(Grid* battlefield) const
 {
-	int Playerindex = this->current_box.index;
+	int player_index = this->current_box.index;
 
 	const auto it = std::find_if(battlefield->grids.begin(), battlefield->grids.end(),
-	                             [&Playerindex](const Types::GridBox& grid_box)
+	                             [&player_index](const Types::GridBox& grid_box)
 	                             {
 		                             return grid_box.occupied == true && grid_box.index !=
-			                             Playerindex;
+			                             player_index;
 	                             });
 
 	//here we check if the acquired location of our enemy is in range of our attacks

@@ -9,11 +9,10 @@
 
 using namespace std;
 
-Battlefield::Battlefield() : grid(nullptr)
-{
-}
+Battlefield::Battlefield()
+= default;
 
-//removed Get player choice, there is no need to have that here, as I created a classto handle the game turns
+//removed Get player choice, there is no need to have that here, as I created a class to handle the game turns
 
 //removed Create Player Character, there is no need to have that here, only the Character class
 //should create new characters;
@@ -39,11 +38,10 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 }
 
 
-//Removed both Alocate player and enemy functions, created a generic alocate function
+//Removed both alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
-	Shared util;
-	const int random = util.GetRandomInt(0, number_of_possible_tiles - 1);
+	const int random = Shared::GetRandomInt(0, number_of_possible_tiles - 1);
 	auto l_front = grid->grids.begin();
 	advance(l_front, random);
 	const Types::GridBox* RandomLocation = &*l_front;
@@ -62,7 +60,7 @@ void Battlefield::AlocatePlayer(Character* player)
 
 //This was the function from GRID, here it makes more sense.
 //I also refactored the method so we can see the icon of each Character class.
-void Battlefield::DrawBattlefield(std::vector<Character*> all_players)
+void Battlefield::DrawBattlefield(const std::vector<Character*>& all_players) const
 {
 	int index = 0;
 
@@ -74,7 +72,7 @@ void Battlefield::DrawBattlefield(std::vector<Character*> all_players)
 
 			if (currentGrid.occupied)
 			{
-				for (auto player : all_players)
+				for (const auto player : all_players)
 				{
 					if (player->current_box.index == currentGrid.index)
 					{

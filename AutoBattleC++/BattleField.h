@@ -8,7 +8,6 @@
 class Battlefield //fixed typo on name
 {
 public:
-
 	Battlefield();
 
 	// fixed naming conventions on the properties of this class.
@@ -41,7 +40,5 @@ public:
 	//We should have only one function for player alocation.
 	void AlocatePlayer(Character* player);
 
-	void DrawBattlefield(std::vector<Character*> all_players);
+	void DrawBattlefield(const std::vector<Character*>& all_players) const;
 };
-
-

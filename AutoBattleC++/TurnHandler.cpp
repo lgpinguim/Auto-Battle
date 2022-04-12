@@ -13,7 +13,7 @@ TurnHandler::TurnHandler()
 TurnHandler::~TurnHandler()
 = default;
 
-void TurnHandler::ValidateBattlefieldDimensions(int& lines, int& columns)
+void TurnHandler::ValidateBattlefieldDimensions(int& lines, int& columns) const
 {
 	bool incorrectInput = true;
 
@@ -83,7 +83,7 @@ void TurnHandler::StartGame()
 	playerCharacter->SetTarget(enemyCharacter);
 	enemyCharacter->SetTarget(playerCharacter);
 
-	int startingPlayer = Shared::GetRandomInt(1, numberOfPlayers);
+	int startingPlayer = Shared::GetRandomInt(0, 1);
 
 	while (gameEnd == false)
 	{
@@ -132,13 +132,13 @@ void TurnHandler::StartTurn()
 	}
 }
 
-void TurnHandler::HandleTurn(int starting_player)
+void TurnHandler::HandleTurn(int starting_player) const
 {
 	if (starting_player == 0)
 	{
 		//if we can attack we will attack, else we move 
-		bool canAttack = all_players[0]->CheckCloseTargets(battlefield->grid);
-		if (canAttack && all_players[0]->is_dead == false)
+		const bool can_attack = all_players[0]->CheckCloseTargets(battlefield->grid);
+		if (can_attack && all_players[0]->is_dead == false)
 		{
 			all_players[0]->Attack();
 		}
@@ -150,8 +150,8 @@ void TurnHandler::HandleTurn(int starting_player)
 	}
 	else
 	{
-		bool canAttack = all_players[1]->CheckCloseTargets(battlefield->grid);
-		if (canAttack && all_players[0]->is_dead == false)
+		const bool can_attack = all_players[1]->CheckCloseTargets(battlefield->grid);
+		if (can_attack && all_players[0]->is_dead == false)
 		{
 			all_players[1]->Attack();
 		}
@@ -167,14 +167,14 @@ void TurnHandler::EndGame()
 {
 	std::cout << "the game has ended!";
 	gameEnd = true;
-	std::cout << "\nPress 1 to play again.";
+	std::cout << "\nPlay again? (y/n): ";
 	std::string input;
 	getline(std::cin, input);
-	int input_number = std::atoi(input.c_str());
 
-	if (input_number == 1)
+
+	if (input == "y" || input=="Y")
 	{
-		for (auto player : all_players)
+		for (const auto player : all_players)
 		{
 			delete player;
 		}
@@ -183,7 +183,9 @@ void TurnHandler::EndGame()
 
 		delete battlefield;
 
-		std::cout.flush();
+		std::cout.clear();
+
+		system("CLS");
 
 		StartGame();
 	}

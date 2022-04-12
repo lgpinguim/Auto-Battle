@@ -15,9 +15,9 @@ public:
 	//Fixed spelling mistakes and created a empty constructor so we can create characters
 	Character();
 	~Character();
-	int ValidateClassInput();
+	int ValidateClassInput() const;
 
-	std::string CreateCharacterName();
+	std::string CreateCharacterName() const;
 
 	//standardized the properties names to snake_case, following C++ conventions 
 
@@ -35,7 +35,7 @@ public:
 
 
 	// this class should not be anywhere else, we should only create characters using the character class
-	Character* CreateCharacter(int classIndex, std::string name, int player_index);
+	static Character* CreateCharacter(int classIndex, std::string name, int player_index);
 
 	void SetTarget(Character* t)
 	{

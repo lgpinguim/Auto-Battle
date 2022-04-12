@@ -7,7 +7,7 @@ class Character;
 class TurnHandler
 {
 public:
-	//Created this class to beter segregate the responsibilities between classes
+	//Created this class to better segregate the responsibilities between classes
 	//This class will be responsible for handling the turns of the game.
 
 
@@ -24,7 +24,7 @@ public:
 
 	TurnHandler();
 	~TurnHandler();
-	void ValidateBattlefieldDimensions(int& lines, int& columns);
+	void ValidateBattlefieldDimensions(int& lines, int& columns) const;
 	//builds everything needed by the game
 	void StartGame();
 
@@ -32,7 +32,7 @@ public:
 	void StartTurn();
 
 	// function responsible for handling the current turn
-	void HandleTurn(int starting_player);
+	void HandleTurn(int starting_player) const;
 
 	//finishes the game
 	void EndGame();

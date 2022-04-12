@@ -10,7 +10,7 @@ public:
 		bool occupied{};
 		int index{};
 
-		GridBox(int x, int y, bool occupied, int index) : x_index(x), y_index(y), occupied(false), index(index)
+		GridBox(int x, int y, bool occupied, int index) : x_index(x), y_index(y), index(index)
 		{
 		}
 
