@@ -34,8 +34,8 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 {
 	const auto newGrid = new Grid(Lines, Columns);
 	std::cout << "\nThe battlefield has been created\n";
-	this->setGrid(newGrid);
-	this->number_of_possible_tiles = newGrid->x_length * newGrid->y_length;
+	setGrid(newGrid);
+	number_of_possible_tiles = newGrid->x_length * newGrid->y_length;
 	return newGrid;
 }
 
@@ -45,7 +45,7 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 void Battlefield::AlocatePlayer(Character* player)
 {
 	Shared util;
-	const int random = util.GetRandomInt(0, grid->grids.size());
+	const int random = util.GetRandomInt(0, number_of_possible_tiles-1);
 	auto l_front = grid->grids.begin();
 	advance(l_front, random);
 	const Types::GridBox* RandomLocation = &*l_front;

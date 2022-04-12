@@ -15,17 +15,59 @@ Character::Character()
 Character::~Character()
 = default;
 
-Character* Character::CreateCharacter(int classIndex)
+int Character::ValidateClassInput()
 {
-	//added the ability to name our characters.
-	const auto character = new Character();
+	//asks for the player to choose between for possible classes via console.
+	std::cout << "Choose Between One of this Classes:\n";
+	std::cout << "[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer\n";
 
-	std::string	charName;
+	std::string choice;
+	getline(std::cin, choice);
 
+	int classIndex = atoi(choice.c_str());
+
+
+	while (classIndex > 4 || classIndex <= 0)
+	{
+		std::cout << "invalid class number input, please try again: \n";
+		std::string choice;
+
+		getline(std::cin, choice);
+
+		if (!choice.empty())
+		{
+			classIndex = std::stoi(choice);
+		}
+	
+	}
+
+	return classIndex;
+}
+
+std::string Character::CreateCharacterName()
+{
+	std::string name;
+	
 	std::cout << "\nCharacter name: ";
 
-	getline(std::cin, charName);
+	getline(std::cin, name);
 
+	while (name.empty())
+	{
+		std::cout << "\nInvalid name input, try again: ";
+		getline(std::cin, name);
+		
+	}
+
+	return name;
+}
+
+Character* Character::CreateCharacter(int classIndex, std::string name,int player_index)
+{
+
+	Character*  character =new Character();
+
+	//fixed the switch, so we are comparing numbers, not strings.
 	switch (classIndex)
 	{
 	case 1:
@@ -33,12 +75,12 @@ Character* Character::CreateCharacter(int classIndex)
 		//paladins have more health
 		character->health = 120;
 		character->base_damage = 20;
-		character->player_index = 0;
+		character->player_index = player_index;
 		character->damage_multiplier = 1.1f;
-		character->character_class = Types::Paladin;
-		character->name = charName + " the paladin\n";
+		character->character_class = Types::CharacterClass::Paladin;
+		character->name = name + " the paladin ";
 		character->icon = 'P';
-		std::cout << "Player Class Choice: " << character->character_class << "\n";
+		std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
 		break;
 	}
 	case 2:
@@ -46,11 +88,12 @@ Character* Character::CreateCharacter(int classIndex)
 		//warriors more damage
 		character->health = 100;
 		character->base_damage = 25;
-		character->player_index = 0;
+		character->player_index = player_index;
 		character->damage_multiplier = 1.1f;
-		character->character_class = Types::Warrior;
-		character->name = charName + " the warrior";
-		std::cout << "Player Class Choice: " << character->character_class << "\n";
+		character->character_class = Types::CharacterClass::Warrior;
+		character->name = name + " the warrior";
+		character->icon = 'W';
+		std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
 		break;
 	}
 	case 3:
@@ -58,11 +101,12 @@ Character* Character::CreateCharacter(int classIndex)
 		//clerics have higer critical damage
 		character->health = 100;
 		character->base_damage = 15;
-		character->player_index = 0;
+		character->player_index = player_index;
 		character->damage_multiplier = 2.0f;
-		character->character_class = Types::Cleric;
-		character->name = charName + " the cleric";
-		std::cout << "Player Class Choice: " << character->character_class << "\n";
+		character->character_class = Types::CharacterClass::Cleric;
+		character->name = name + " the cleric";
+		character->icon = 'C';
+		std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
 		break;
 	}
 	case 4:
@@ -70,22 +114,16 @@ Character* Character::CreateCharacter(int classIndex)
 		//archers have higher critical chance
 		character->health = 100;
 		character->base_damage = 20;
-		character->player_index = 0;
+		character->player_index = player_index;
 		character->damage_multiplier = 1.5f;
-		character->character_class = Types::Archer;
-		character->name = charName + " the archer";
-		std::cout << "Player Class Choice: " << character->character_class << "\n";
+		character->character_class = Types::CharacterClass::Archer;
+		character->name = name + " the archer";
+		character->icon = 'A';
+		std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
 		break;
 	}
 	default:
-		std::cout << "invalid input, please try again: \n";
-		std::string choice;
 
-		getline(std::cin, choice);
-
-		const int numericChoice = std::stoi(choice);
-
-		CreateCharacter(numericChoice);
 		break;
 	}
 
@@ -105,7 +143,7 @@ void Character::TakeDamage(float amount)
 void Character::Die()
 {
 	this->is_dead = true;
-	std::cout << this->name << " is dead!";
+	std::cout << this->name << " is dead! \n";
 }
 
 
@@ -123,32 +161,63 @@ bool Character::CheckCloseTargets(Grid * battlefield) const
 		});
 
 	//here we check if the acquired location of our enemy is in range of our attacks
-	if (this->current_box.x_index - 1 == it->x_index && this->current_box.y_index == it->y_index)
-	{
-		return true;
-	}
-	else if (this->current_box.x_index + 1 == it->x_index && this->current_box.y_index == it->y_index)
-	{
-		return true;
-	}
-	else if (this->current_box.x_index == it->x_index && this->current_box.y_index + 1 == it->y_index)
-	{
-		return true;
-	}
-	else if (this->current_box.x_index == it->x_index && this->current_box.y_index - 1 == it->y_index)
-	{
-		return true;
-	}
+	return ((current_box.x_index - 1 == it->x_index && current_box.y_index == it->y_index)
+		|| (current_box.x_index + 1 == it->x_index && current_box.y_index == it->y_index)
+		|| (current_box.x_index == it->x_index && current_box.y_index + 1 == it->y_index)
+		|| (current_box.x_index == it->x_index && current_box.y_index - 1 == it->y_index));
 
-	return false;
 }
 
-void Character::MoveToEnemy(Battlefield* battlefield)
+void Character::WalkLeft(Battlefield * battlefield, int listPosition)
+{
+	current_box.occupied = false;
+	battlefield->grid->grids[current_box.index] = current_box;
+	current_box = (battlefield->grid->grids[current_box.index - 1]);
+	current_box.occupied = true;
+	battlefield->grid->grids[current_box.index] = current_box;
+	battlefield->index_location_of_each_player[listPosition] = current_box.index;
+	std::cout << "Player " << player_index << " walked left\n";
+}
+
+void Character::WalkRight(Battlefield * battlefield, int listPosition)
+{
+	current_box.occupied = false;
+	battlefield->grid->grids[current_box.index] = current_box;
+	current_box = (battlefield->grid->grids[current_box.index + 1]);
+	current_box.occupied = true;
+	battlefield->grid->grids[current_box.index] = current_box;
+	battlefield->index_location_of_each_player[listPosition] = current_box.index;
+	std::cout << "Player " << player_index << " walked right\n";
+}
+
+void Character::WalkUp(Battlefield * battlefield, int listPosition)
+{
+	current_box.occupied = false;
+	battlefield->grid->grids[current_box.index] = current_box;
+	current_box = (battlefield->grid->grids[current_box.index - battlefield->grid->y_length]);
+	current_box.occupied = true;
+	battlefield->grid->grids[current_box.index] = current_box;
+	battlefield->index_location_of_each_player[listPosition] = current_box.index;
+	std::cout << "Player " << player_index << " walked up\n";
+}
+
+void Character::WalkDown(Battlefield * battlefield, int listPosition)
+{
+	current_box.occupied = false;
+	battlefield->grid->grids[current_box.index] = current_box;
+	current_box = (battlefield->grid->grids[current_box.index + battlefield->grid->y_length]);
+	current_box.occupied = true;
+	battlefield->grid->grids[current_box.index] = current_box;
+	battlefield->index_location_of_each_player[listPosition] = current_box.index;
+	std::cout << "Player " << player_index << " walked down\n";
+}
+
+void Character::MoveToEnemy(Battlefield * battlefield)
 {
 	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
-	int listPosition=0;
+	int listPosition = 0;
 
-	for(int i = 0; i< battlefield->index_location_of_each_player.size();i++)
+	for (int i = 0; i < battlefield->index_location_of_each_player.size(); i++)
 	{
 		if (battlefield->index_location_of_each_player[i] == current_box.index)
 		{
@@ -157,46 +226,21 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 	}
 
 	//each one of the ifs below checks where the enemy is and move the character one step closer to it.
-
 	if (current_box.x_index > target->current_box.x_index)
 	{
-		current_box.occupied = false;
-		battlefield->grid->grids[current_box.index] = current_box;
-		current_box = (battlefield->grid->grids[current_box.index - 1]);
-		current_box.occupied = true;
-		battlefield->grid->grids[current_box.index] = current_box;
-		battlefield->index_location_of_each_player[listPosition] = current_box.index;
-		std::cout << "Player " << player_index << " walked left\n";
+		WalkLeft(battlefield, listPosition);
 	}
 	else if (this->current_box.x_index < target->current_box.x_index)
 	{
-		current_box.occupied = false;
-		battlefield->grid->grids[current_box.index] = current_box;
-		current_box = (battlefield->grid->grids[current_box.index + 1]);
-		current_box.occupied = true;
-		battlefield->grid->grids[current_box.index] = current_box;
-		battlefield->index_location_of_each_player[listPosition] = current_box.index;
-		std::cout << "Player " << player_index << " walked right\n";
+		WalkRight(battlefield, listPosition);
 	}
 	else if (current_box.y_index > target->current_box.y_index)
 	{
-		current_box.occupied = false;
-		battlefield->grid->grids[current_box.index] = current_box;
-		current_box = (battlefield->grid->grids[current_box.index - battlefield->grid->y_length]);
-		current_box.occupied = true;
-		battlefield->grid->grids[current_box.index] = current_box;
-		battlefield->index_location_of_each_player[listPosition] = current_box.index;
-		std::cout << "Player " << player_index << " walked up\n";
+		WalkUp(battlefield, listPosition);
 	}
 	else if (current_box.y_index < target->current_box.y_index)
 	{
-		current_box.occupied = false;
-		battlefield->grid->grids[current_box.index] = current_box;
-		current_box = (battlefield->grid->grids[current_box.index + battlefield->grid->y_length]);
-		current_box.occupied = true;
-		battlefield->grid->grids[current_box.index] = current_box;
-		battlefield->index_location_of_each_player[listPosition] = current_box.index;
-		std::cout << "Player " << player_index << " walked down\n";
+		WalkDown(battlefield, listPosition);
 	}
 
 }
@@ -204,8 +248,9 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 
 void Character::Attack() const
 {
-	target->TakeDamage(this->base_damage);
+	
 	std::cout << "Player " << this->player_index << " is attacking the player " << this->target->player_index << "  and did " <<
 		this->base_damage << " damage\n";
+	target->TakeDamage(this->base_damage);
 }
 

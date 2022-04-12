@@ -10,12 +10,8 @@ public:
         bool occupied{};
         int index{};
 
-        GridBox(int x, int y, bool occupied, int index)
+        GridBox(int x, int y, bool occupied, int index) : x_index(x), y_index(y), occupied(false), index(index)
         {
-            x_index = x;
-            y_index = y;
-            occupied = occupied;
-            index = index;
         }
 
         GridBox() = default;
@@ -23,7 +19,7 @@ public:
 
     };
 
-    enum CharacterClass
+    enum class CharacterClass
     {
         Paladin = 1,
         Warrior = 2,

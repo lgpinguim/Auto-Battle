@@ -12,21 +12,21 @@ public:
 
 
 	//List of players
-	std::vector<Character>* all_players;
+	std::vector<Character*> all_players;
 
 	//Battlefield
-	Battlefield* battlefield;
+	Battlefield* battlefield{};
 
-	bool gameEnd;
+	bool gameEnd{false};
 
-	int currentTurn;
+	int currentTurn{};
 
 
+	TurnHandler();
+	~TurnHandler();
+	void ValidateBattlefieldDimensions(int& lines, int& columns);
 	//builds everything needed by the game
-	void Setup();
-
-	//Prepares everything for the creation of the player character
-	void GetPlayerChoiceForCharacterCreation();
+	void StartGame();
 
 	//starts the turn and sets who will play
 	void StartTurn();

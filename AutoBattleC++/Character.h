@@ -7,6 +7,7 @@
 #include "Character.h"
 #include "Types.h"
 
+class Battlefield;
 
 class Character
 {
@@ -15,6 +16,9 @@ public:
 	//Fixed spelling mistakes and created a empty constructor so we can create characters
 	Character();
 	~Character();
+	int ValidateClassInput();
+
+	std::string CreateCharacterName();
 
 	//standardized the properties names to snake_case, following C++ conventions 
 
@@ -24,7 +28,7 @@ public:
 	float damage_multiplier{};
 	//removed comment from GridBox and fixed the name.
 	Types::GridBox current_box;
-	Types::CharacterClass character_class;
+	Types::CharacterClass character_class{};
 	int player_index{};
 	Character* target{};
 	bool is_dead{false};
@@ -32,7 +36,12 @@ public:
 
 	
 	// this class should not be anywhere else, we should only create characters using the character class
-	Character* CreateCharacter(int classIndex);
+	Character* CreateCharacter(int classIndex, std::string name, int player_index);
+
+	void SetTarget(Character* t)
+	{
+		target = t;
+	}
 
 	void TakeDamage(float amount);
 
@@ -43,6 +52,10 @@ public:
 	//deleted move to function, it was not implemented or used anywhere 
 
 	bool CheckCloseTargets(Grid* battlefield) const;
+	void WalkLeft(Battlefield* battlefield, int listPosition);
+	void WalkRight(Battlefield* battlefield, int listPosition);
+	void WalkUp(Battlefield* battlefield, int listPosition);
+	void WalkDown(Battlefield* battlefield, int listPosition);
 
 	void MoveToEnemy(Battlefield* battlefield);
 

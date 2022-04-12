@@ -5,8 +5,9 @@
 
 int main()
 {
-    Battlefield* battleField = new(Battlefield);
-    battleField->Setup();
+	const auto turnHandler = new TurnHandler();
+
+	turnHandler->StartGame();
 }
 
 
