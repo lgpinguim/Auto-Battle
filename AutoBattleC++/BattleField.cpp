@@ -11,7 +11,6 @@ using namespace std;
 
 Battlefield::Battlefield() : grid(nullptr)
 {
-
 }
 
 //removed Get player choice, there is no need to have that here, as I created a classto handle the game turns
@@ -40,12 +39,11 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 }
 
 
-
 //Removed both Alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
 	Shared util;
-	const int random = util.GetRandomInt(0, number_of_possible_tiles-1);
+	const int random = util.GetRandomInt(0, number_of_possible_tiles - 1);
 	auto l_front = grid->grids.begin();
 	advance(l_front, random);
 	const Types::GridBox* RandomLocation = &*l_front;

@@ -7,7 +7,6 @@
 #include "BattleField.h"
 
 
-
 Character::Character()
 = default;
 
@@ -38,7 +37,6 @@ int Character::ValidateClassInput()
 		{
 			classIndex = std::stoi(choice);
 		}
-	
 	}
 
 	return classIndex;
@@ -47,7 +45,7 @@ int Character::ValidateClassInput()
 std::string Character::CreateCharacterName()
 {
 	std::string name;
-	
+
 	std::cout << "\nCharacter name: ";
 
 	getline(std::cin, name);
@@ -56,72 +54,70 @@ std::string Character::CreateCharacterName()
 	{
 		std::cout << "\nInvalid name input, try again: ";
 		getline(std::cin, name);
-		
 	}
 
 	return name;
 }
 
-Character* Character::CreateCharacter(int classIndex, std::string name,int player_index)
+Character* Character::CreateCharacter(int classIndex, std::string name, int player_index)
 {
-
-	Character*  character =new Character();
+	auto character = new Character();
 
 	//fixed the switch, so we are comparing numbers, not strings.
 	switch (classIndex)
 	{
 	case 1:
-	{
-		//paladins have more health
-		character->health = 120;
-		character->base_damage = 20;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.1f;
-		character->character_class = Types::CharacterClass::Paladin;
-		character->name = name + " the paladin ";
-		character->icon = 'P';
-		std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
-		break;
-	}
+		{
+			//paladins have more health
+			character->health = 120;
+			character->base_damage = 20;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.1f;
+			character->character_class = Types::CharacterClass::Paladin;
+			character->name = name + " the paladin ";
+			character->icon = 'P';
+			std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
+			break;
+		}
 	case 2:
-	{
-		//warriors more damage
-		character->health = 100;
-		character->base_damage = 25;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.1f;
-		character->character_class = Types::CharacterClass::Warrior;
-		character->name = name + " the warrior";
-		character->icon = 'W';
-		std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
-		break;
-	}
+		{
+			//warriors more damage
+			character->health = 100;
+			character->base_damage = 25;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.1f;
+			character->character_class = Types::CharacterClass::Warrior;
+			character->name = name + " the warrior";
+			character->icon = 'W';
+			std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
+			break;
+		}
 	case 3:
-	{
-		//clerics have higer critical damage
-		character->health = 100;
-		character->base_damage = 15;
-		character->player_index = player_index;
-		character->damage_multiplier = 2.0f;
-		character->character_class = Types::CharacterClass::Cleric;
-		character->name = name + " the cleric";
-		character->icon = 'C';
-		std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
-		break;
-	}
+		{
+			//clerics have higer critical damage
+			character->health = 100;
+			character->base_damage = 15;
+			character->player_index = player_index;
+			character->damage_multiplier = 2.0f;
+			character->character_class = Types::CharacterClass::Cleric;
+			character->name = name + " the cleric";
+			character->icon = 'C';
+			std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
+			break;
+		}
 	case 4:
-	{
-		//archers have higher critical chance
-		character->health = 100;
-		character->base_damage = 20;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.5f;
-		character->character_class = Types::CharacterClass::Archer;
-		character->name = name + " the archer";
-		character->icon = 'A';
-		std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
-		break;
-	}
+		{
+			//archers have higher critical chance
+			character->health = 100;
+			character->base_damage = 20;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.5f;
+			character->character_class = Types::CharacterClass::Archer;
+			character->name = name + " the archer";
+			character->icon = 'A';
+			std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
+			break;
+		}
 	default:
 
 		break;
@@ -148,27 +144,25 @@ void Character::Die()
 
 
 //In this function we first define who is our character and where he is, after that we get a occupied GridBox index and check if there is any around our character that is occupied.
-bool Character::CheckCloseTargets(Grid * battlefield) const
+bool Character::CheckCloseTargets(Grid* battlefield) const
 {
-
 	int Playerindex = this->current_box.index;
 
 	const auto it = std::find_if(battlefield->grids.begin(), battlefield->grids.end(),
-		[&Playerindex](const Types::GridBox& grid_box)
-		{
-			return grid_box.occupied == true && grid_box.index !=
-				Playerindex;
-		});
+	                             [&Playerindex](const Types::GridBox& grid_box)
+	                             {
+		                             return grid_box.occupied == true && grid_box.index !=
+			                             Playerindex;
+	                             });
 
 	//here we check if the acquired location of our enemy is in range of our attacks
 	return ((current_box.x_index - 1 == it->x_index && current_box.y_index == it->y_index)
 		|| (current_box.x_index + 1 == it->x_index && current_box.y_index == it->y_index)
 		|| (current_box.x_index == it->x_index && current_box.y_index + 1 == it->y_index)
 		|| (current_box.x_index == it->x_index && current_box.y_index - 1 == it->y_index));
-
 }
 
-void Character::WalkLeft(Battlefield * battlefield, int listPosition)
+void Character::WalkLeft(Battlefield* battlefield, int listPosition)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -179,7 +173,7 @@ void Character::WalkLeft(Battlefield * battlefield, int listPosition)
 	std::cout << "Player " << player_index << " walked left\n";
 }
 
-void Character::WalkRight(Battlefield * battlefield, int listPosition)
+void Character::WalkRight(Battlefield* battlefield, int listPosition)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -190,7 +184,7 @@ void Character::WalkRight(Battlefield * battlefield, int listPosition)
 	std::cout << "Player " << player_index << " walked right\n";
 }
 
-void Character::WalkUp(Battlefield * battlefield, int listPosition)
+void Character::WalkUp(Battlefield* battlefield, int listPosition)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -201,7 +195,7 @@ void Character::WalkUp(Battlefield * battlefield, int listPosition)
 	std::cout << "Player " << player_index << " walked up\n";
 }
 
-void Character::WalkDown(Battlefield * battlefield, int listPosition)
+void Character::WalkDown(Battlefield* battlefield, int listPosition)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -212,7 +206,7 @@ void Character::WalkDown(Battlefield * battlefield, int listPosition)
 	std::cout << "Player " << player_index << " walked down\n";
 }
 
-void Character::MoveToEnemy(Battlefield * battlefield)
+void Character::MoveToEnemy(Battlefield* battlefield)
 {
 	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
 	int listPosition = 0;
@@ -242,15 +236,13 @@ void Character::MoveToEnemy(Battlefield * battlefield)
 	{
 		WalkDown(battlefield, listPosition);
 	}
-
 }
 
 
 void Character::Attack() const
 {
-	
-	std::cout << "Player " << this->player_index << " is attacking the player " << this->target->player_index << "  and did " <<
+	std::cout << "Player " << this->player_index << " is attacking the player " << this->target->player_index <<
+		"  and did " <<
 		this->base_damage << " damage\n";
 	target->TakeDamage(this->base_damage);
 }
-

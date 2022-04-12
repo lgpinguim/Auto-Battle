@@ -12,7 +12,6 @@ class Battlefield;
 class Character
 {
 public:
-
 	//Fixed spelling mistakes and created a empty constructor so we can create characters
 	Character();
 	~Character();
@@ -34,7 +33,7 @@ public:
 	bool is_dead{false};
 	char icon{'X'};
 
-	
+
 	// this class should not be anywhere else, we should only create characters using the character class
 	Character* CreateCharacter(int classIndex, std::string name, int player_index);
 
@@ -60,8 +59,4 @@ public:
 	void MoveToEnemy(Battlefield* battlefield);
 
 	void Attack() const;
-
-
 };
-
-

@@ -6,18 +6,16 @@
 
 class Grid
 {
-
 public:
-    //changed variable names to C++ standards
-    Grid(int lines, int columns);
-    ~Grid();
+	//changed variable names to C++ standards
+	Grid(int lines, int columns);
+	~Grid();
 
-    std::vector<Types::GridBox> grids;
+	std::vector<Types::GridBox> grids;
 
-    int x_length; //fixed typo here
-    int y_length;
-    
-    //Removed dr
-     //changed variable names to C++ standards
+	int x_length; //fixed typo here
+	int y_length;
+
+	//Removed dr
+	//changed variable names to C++ standards
 };
-

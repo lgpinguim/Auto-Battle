@@ -47,8 +47,8 @@ void TurnHandler::ValidateBattlefieldDimensions(int& lines, int& columns)
 void TurnHandler::StartGame()
 {
 	// variable initialization
-	Character* playerCharacter = new Character();
-	Character* enemyCharacter = new Character();
+	auto playerCharacter = new Character();
+	auto enemyCharacter = new Character();
 	battlefield = new Battlefield();
 	gameEnd = false;
 	currentTurn = 0;
@@ -105,7 +105,6 @@ void TurnHandler::StartGame()
 		{
 			startingPlayer = 0;
 		}
-
 	}
 }
 
@@ -119,7 +118,6 @@ void TurnHandler::StartTurn()
 	}
 	else if (all_players[1]->health <= 0)
 	{
-
 		std::cout << "\nCongratulations! you won the game!\n";
 		EndGame();
 	}
@@ -195,6 +193,4 @@ void TurnHandler::EndGame()
 		gameEnd = true;
 		std::cout << "Thank you for playing!";
 	}
-
-
 }

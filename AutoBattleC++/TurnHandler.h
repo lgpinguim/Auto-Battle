@@ -37,4 +37,3 @@ public:
 	//finishes the game
 	void EndGame();
 };
-
