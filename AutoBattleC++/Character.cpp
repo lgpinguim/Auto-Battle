@@ -58,7 +58,6 @@ std::string Character::CreateCharacterName() const
 		if (name.empty())
 		{
 			std::cout << "\nInvalid name input, try again: ";
-			getline(std::cin, name);
 		}
 		else
 		{

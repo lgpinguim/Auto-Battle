@@ -33,7 +33,7 @@ void TurnHandler::ValidateBattlefieldDimensions(int& lines, int& columns) const
 		columns = atoi(width.c_str());
 		const bool is_valid_matrix_size = lines * columns >= 2;
 
-		if (lines && columns && is_valid_matrix_size)
+		if (lines >= 2 &&  is_valid_matrix_size)
 		{
 			incorrectInput = false;
 		}
@@ -111,7 +111,7 @@ void TurnHandler::StartTurn()
 	}
 	else if (all_players[1]->health <= 0)
 	{
-		std::cout << "\nCongratulations! you won the game!\n";
+		std::cout << "\nCongratulations! "  << all_players[0]->name <<  "won the game!\n";
 		EndGame();
 	}
 	else if (gameEnd == false)

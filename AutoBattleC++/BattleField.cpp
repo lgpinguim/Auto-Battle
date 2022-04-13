@@ -41,7 +41,7 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 //Removed both alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
-	bool searching_valid_position =false;
+	bool searching_valid_position =true;
 	//Improved performance and confiability using while instead of recursiveness.
 	while (searching_valid_position) {
 		const int random = Shared::GetRandomInt(0, number_of_possible_tiles - 1);
