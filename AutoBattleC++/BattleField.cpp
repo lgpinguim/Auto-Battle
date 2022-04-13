@@ -41,19 +41,19 @@ Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 //Removed both alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
-	const int random = Shared::GetRandomInt(0, number_of_possible_tiles - 1);
+	const int random = Shared::GetRandomInt(0, number_of_possible_tiles-1);
 	auto l_front = grid->grids.begin();
 	advance(l_front, random);
 	const Types::GridBox* RandomLocation = &*l_front;
-	if (!RandomLocation->occupied)
+	if (RandomLocation->occupied) //removed ! for better readability
+	{
+		AlocatePlayer(player);
+	}
+	else
 	{
 		index_location_of_each_player.push_back(l_front->index);
 		l_front->occupied = true;
 		player->current_box = *l_front;
-	}
-	else
-	{
-		AlocatePlayer(player);
 	}
 }
 

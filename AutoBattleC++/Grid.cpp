@@ -9,8 +9,7 @@ Grid::Grid(int lines, int columns) : x_length(lines), y_length(columns)
 	{
 		for (int j = 0; j < y_length; j++)
 		{
-			auto newBox = Types::GridBox(j, i, false, (columns * i + j));
-			grids.push_back(newBox);
+			grids.push_back(Types::GridBox(j, i, false, (columns * i + j)));
 		}
 	}
 }

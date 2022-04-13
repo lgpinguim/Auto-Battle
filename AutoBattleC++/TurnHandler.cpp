@@ -96,15 +96,8 @@ void TurnHandler::StartGame()
 			HandleTurn(startingPlayer);
 		}
 
+		startingPlayer = startingPlayer == 0 ? 1 : 0;
 
-		if (startingPlayer == 0)
-		{
-			startingPlayer = 1;
-		}
-		else
-		{
-			startingPlayer = 0;
-		}
 	}
 }
 

@@ -55,6 +55,7 @@ public:
 	void WalkRight(Battlefield* battlefield, int listPosition);
 	void WalkUp(Battlefield* battlefield, int listPosition);
 	void WalkDown(Battlefield* battlefield, int listPosition);
+	void Move(Battlefield* battlefield, int offset, int listPosition, std::string direction);
 
 	void MoveToEnemy(Battlefield* battlefield);
 
