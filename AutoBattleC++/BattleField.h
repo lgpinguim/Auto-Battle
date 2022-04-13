@@ -30,15 +30,18 @@ public:
 
 	//Added Function for battlefield creation
 
+	//Setter for Grid
 	void setGrid(Grid* g)
 	{
 		grid = g;
 	}
 
+	//Function to create the battlefield
 	Grid* CreateBattleField(int Lines, int Columns);
 
 	//We should have only one function for player alocation.
 	void AlocatePlayer(Character* player);
 
+	//function to draw the battlefield
 	void DrawBattlefield(const std::vector<Character*>& all_players) const;
 };
