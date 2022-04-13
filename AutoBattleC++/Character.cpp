@@ -211,9 +211,7 @@ void Character::MoveToEnemy(Battlefield * battlefield)
 	for (int i : battlefield->index_location_of_each_player)
 	{
 
-		listPosition = i == current_box.index
-			? 1
-			: listPosition;
+		listPosition = i == current_box.index ? 1 : listPosition;
 
 	}
 
