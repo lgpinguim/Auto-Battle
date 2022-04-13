@@ -4,6 +4,8 @@
 #include <ctime>
 #include <random>
 
+//used a more reliable number generator
+
 int Shared::GetRandomInt(int min, int max)
 {
 	std::uniform_int_distribution<int> distribution(min, max);

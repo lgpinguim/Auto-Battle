@@ -10,6 +10,7 @@ public:
 		bool occupied{};
 		int index{};
 
+		//constructor with the variables initialized
 		GridBox(int x, int y, bool occupied, int index) : x_index(x), y_index(y), index(index)
 		{
 		}
@@ -17,6 +18,7 @@ public:
 		GridBox() = default;
 	};
 
+	// we should use enum classes instead of enum, this was generating a compilation warning
 	enum class CharacterClass
 	{
 		Paladin = 1,

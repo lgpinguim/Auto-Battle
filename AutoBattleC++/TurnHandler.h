@@ -9,22 +9,20 @@ class TurnHandler
 public:
 	//Created this class to better segregate the responsibilities between classes
 	//This class will be responsible for handling the turns of the game.
-
+	TurnHandler();
+	~TurnHandler();
 
 	//List of players
 	std::vector<Character*> all_players;
 
 	//Battlefield
 	Battlefield* battlefield{};
+	//variable used to set the flow of the game
+	bool game_end{false};
+	//counter of how many turns we have
+	int current_turn{};
 
-	bool gameEnd{false};
 
-	int currentTurn{};
-
-
-	TurnHandler();
-	~TurnHandler();
-	void ValidateBattlefieldDimensions(int& lines, int& columns) const;
 	//builds everything needed by the game
 	void StartGame();
 

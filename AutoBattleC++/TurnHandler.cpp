@@ -13,86 +13,59 @@ TurnHandler::TurnHandler()
 TurnHandler::~TurnHandler()
 = default;
 
-void TurnHandler::ValidateBattlefieldDimensions(int& lines, int& columns) const
-{
-	bool incorrectInput = true;
 
-	while (incorrectInput)
-	{
-		//Building the map
-		std::cout << "Please choose the map height: ";
-		std::string height;
-		getline(std::cin, height);
-
-		std::cout << "Please choose the map width: ";
-		std::string width;
-		getline(std::cin, width);
-
-
-		lines = atoi(height.c_str());
-		columns = atoi(width.c_str());
-		const bool is_valid_matrix_size = lines * columns >= 2;
-
-		if (lines >= 2 &&  is_valid_matrix_size)
-		{
-			incorrectInput = false;
-		}
-		else
-		{
-			std::cout << "Wrong dimensions, please try again!\n";
-		}
-	}
-}
 
 void TurnHandler::StartGame()
 {
 	// variable initialization
-	auto playerCharacter = new Character();
-	auto enemyCharacter = new Character();
+	auto player_character = new Character();
+	auto enemy_character = new Character();
 	battlefield = new Battlefield();
-	gameEnd = false;
-	currentTurn = 0;
-	int numberOfPlayers = 0;
-
+	game_end = false;
+	current_turn = 0;
 	int lines;
 	int columns;
-	ValidateBattlefieldDimensions(lines, columns);
 
+	//here we validate the input creation of the battlefield
+	battlefield->ValidateBattlefieldDimensions(lines, columns);
 	battlefield->grid = battlefield->CreateBattleField(lines, columns);
 	battlefield->DrawBattlefield(all_players);
 
-	int classIndex = playerCharacter->ValidateClassInput();
-	std::string name = playerCharacter->CreateCharacterName();
+	//input for class and name validation
+	int class_index = player_character->ValidateClassInput();
+	std::string name = player_character->CreateCharacterName();
 
-	playerCharacter = playerCharacter->CreateCharacter(classIndex, name, 1);
-	all_players.push_back(playerCharacter);
-	numberOfPlayers++;
+	//player character validation
+	player_character = Character::CreateCharacter(class_index, name, 1);
+	all_players.push_back(player_character);
 
-	classIndex = Shared::GetRandomInt(1, 4);
+	//enemy creation
+	class_index = Shared::GetRandomInt(1, 4);
 	name = "Anakin";
+	enemy_character = Character::CreateCharacter(class_index, name, 2);
+	all_players.push_back(enemy_character);
 
-	enemyCharacter = enemyCharacter->CreateCharacter(classIndex, name, 2);
-	all_players.push_back(enemyCharacter);
-	numberOfPlayers++;
+	//target setting
+	player_character->SetTarget(enemy_character);
+	enemy_character->SetTarget(player_character);
 
+	//alocation of all characters to the battlefield
 	for (Character* player : all_players)
 	{
 		battlefield->AlocatePlayer(player);
 	}
 
-	playerCharacter->SetTarget(enemyCharacter);
-	enemyCharacter->SetTarget(playerCharacter);
-
+	//a simple random to determine who will start the game
 	int startingPlayer = Shared::GetRandomInt(0, 1);
 
-	while (gameEnd == false)
+	//here is where our turns will happen
+	while (game_end == false)
 	{
 		StartTurn();
 
-
-		if (gameEnd == false)
+		if (game_end == false)
 		{
-			std::cout << "Current turn: " << ++currentTurn << "\n";
+			std::cout << "Current turn: " << ++current_turn << "\n";
 			HandleTurn(startingPlayer);
 		}
 
@@ -101,7 +74,7 @@ void TurnHandler::StartGame()
 	}
 }
 
-
+//on the beginning of each turn we check if anyone died and end the game if that is true, if not we continue the turn.
 void TurnHandler::StartTurn()
 {
 	if (all_players[0]->health <= 0)
@@ -114,17 +87,16 @@ void TurnHandler::StartTurn()
 		std::cout << "\nCongratulations! "  << all_players[0]->name <<  "won the game!\n";
 		EndGame();
 	}
-	else if (gameEnd == false)
+	else if (game_end == false)
 	{
 		printf("\n");
 		printf("Click on any key to start the next turn...\n");
 		printf("\n");
-
-
 		std::cin.get();
 	}
 }
 
+//here each character will have the opportunity to check if the enemy is close and move, or attack.
 void TurnHandler::HandleTurn(int starting_player) const
 {
 	if (starting_player == 0)
@@ -156,10 +128,11 @@ void TurnHandler::HandleTurn(int starting_player) const
 	}
 }
 
+//Here we finish the game and ask if the player wants another round
 void TurnHandler::EndGame()
 {
 	std::cout << "the game has ended!";
-	gameEnd = true;
+	game_end = true;
 	std::cout << "\nPlay again? (y/n): ";
 	std::string input;
 	getline(std::cin, input);
@@ -167,6 +140,7 @@ void TurnHandler::EndGame()
 
 	if (input == "y" || input=="Y")
 	{
+		//here we dealocate and delete our pointers so we wont use more memory each time we run
 		for (const auto player : all_players)
 		{
 			delete player;
@@ -185,7 +159,7 @@ void TurnHandler::EndGame()
 
 	else
 	{
-		gameEnd = true;
+		game_end = true;
 		std::cout << "Thank you for playing!";
 	}
 }

@@ -42,6 +42,7 @@ public:
 
 	//We should have only one function for player alocation.
 	void AlocatePlayer(Character* player);
+	void ValidateBattlefieldDimensions(int& lines, int& columns) const;
 
 	//function to draw the battlefield
 	void DrawBattlefield(const std::vector<Character*>& all_players) const;

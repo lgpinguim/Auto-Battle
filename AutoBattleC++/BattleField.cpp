@@ -28,6 +28,7 @@ Battlefield::Battlefield()
 
 //Removed get random int, as it was a malpractice 
 
+//function used to create the battlefield and store how many tiles we have
 Grid* Battlefield::CreateBattleField(int Lines, int Columns)
 {
 	const auto newGrid = new Grid(Lines, Columns);
@@ -58,6 +59,38 @@ void Battlefield::AlocatePlayer(Character* player)
 	}
 }
 
+
+//a simple validator before we create the battlefield
+void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
+{
+	bool incorrectInput = true;
+
+	while (incorrectInput)
+	{
+		//Building the map
+		std::cout << "Please choose the map height: ";
+		std::string height;
+		getline(std::cin, height);
+
+		std::cout << "Please choose the map width: ";
+		std::string width;
+		getline(std::cin, width);
+
+
+		lines = atoi(height.c_str());
+		columns = atoi(width.c_str());
+		const bool is_valid_matrix_size = lines * columns >= 2;
+
+		if (lines >= 2 && is_valid_matrix_size)
+		{
+			incorrectInput = false;
+		}
+		else
+		{
+			std::cout << "Wrong dimensions, please try again!\n";
+		}
+	}
+}
 
 //This was the function from GRID, here it makes more sense.
 //I also refactored the method so we can see the icon of each Character class.
