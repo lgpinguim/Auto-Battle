@@ -123,7 +123,7 @@ Character* Character::CreateCharacter(int classIndex, std::string name, int play
 	}
 	case 4:
 	{
-		//archers have higher critical chance and range
+		//archers have higher critical chance
 		character->health = 100;
 		character->base_damage = 20;
 		character->player_index = player_index;
