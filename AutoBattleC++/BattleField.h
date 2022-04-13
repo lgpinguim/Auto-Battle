@@ -10,6 +10,7 @@ class Battlefield //fixed typo on name
 public:
 	Battlefield();
 
+
 	// fixed naming conventions on the properties of this class.
 	Grid* grid{};
 

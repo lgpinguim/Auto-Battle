@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include "BattleField.h"
+#include "Shared.h"
 
 
 Character::Character()
@@ -236,8 +237,23 @@ void Character::MoveToEnemy(Battlefield * battlefield)
 
 void Character::Attack() const
 {
-	std::cout << "Player " << this->player_index << " is attacking the player " << this->target->player_index <<
+	//added a crititical chance function so we can use the damage multiplier.
+
+	int criticalChance = Shared::GetRandomInt(0, 10);
+	int damage = base_damage;
+
+	if (criticalChance > 7 )
+	{
+		damage = base_damage * damage_multiplier;
+	}
+	else
+	{
+		damage = base_damage;
+	}
+
+
+	std::cout << "Player " << player_index << " is attacking the player " << target->player_index <<
 		"  and did " <<
-		this->base_damage << " damage\n";
-	target->TakeDamage(this->base_damage);
+		damage << " damage\n";
+	target->TakeDamage(damage);
 }

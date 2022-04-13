@@ -15,9 +15,8 @@ public:
 	//Fixed spelling mistakes and created a empty constructor so we can create characters
 	Character();
 	~Character();
-	int ValidateClassInput() const;
 
-	std::string CreateCharacterName() const;
+
 
 	//standardized the properties names to snake_case, following C++ conventions 
 
@@ -56,6 +55,10 @@ public:
 	void WalkUp(Battlefield* battlefield, int listPosition);
 	void WalkDown(Battlefield* battlefield, int listPosition);
 	void Move(Battlefield* battlefield, int offset, int listPosition, std::string direction);
+
+	int ValidateClassInput() const;
+
+	std::string CreateCharacterName() const;
 
 	void MoveToEnemy(Battlefield* battlefield);
 
