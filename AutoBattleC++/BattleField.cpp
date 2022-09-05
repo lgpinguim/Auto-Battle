@@ -29,7 +29,7 @@ Battlefield::Battlefield()
 //Removed get random int, as it was a malpractice 
 
 //function used to create the battlefield and store how many tiles we have
-Grid* Battlefield::CreateBattleField(int Lines, int Columns)
+Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 {
 	const auto newGrid = new Grid(Lines, Columns);
 	std::cout << "\nThe battlefield has been created\n";

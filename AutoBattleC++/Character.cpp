@@ -7,6 +7,7 @@
 #include "BattleField.h"
 #include "Shared.h"
 
+using namespace std;
 
 Character::Character()
 = default;
@@ -19,18 +20,17 @@ Character::~Character()
 int Character::ValidateClassInput() const
 {
 	//asks for the player to choose between for possible classes via console.
-	std::cout << "Choose Between One of this Classes:\n";
-	std::cout << "[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer\n";
+	cout << "Choose Between One of this Classes:\n";
+	cout << "[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer\n";
 
 	bool is_choice_needed = true;
 	int class_index = 0;
 
 	while (is_choice_needed)
 	{
-
-		std::string choice;
+		string choice;
 		getline(std::cin, choice);
-		class_index = std::atoi(choice.c_str());
+		class_index = atoi(choice.c_str());
 
 		if (choice.empty() || class_index < 1 || class_index > 4)
 		{
@@ -38,7 +38,7 @@ int Character::ValidateClassInput() const
 		}
 		else
 		{
-			class_index = std::atoi(choice.c_str());
+			class_index = atoi(choice.c_str());
 			is_choice_needed = false;
 		}
 	}
@@ -47,9 +47,9 @@ int Character::ValidateClassInput() const
 }
 
 //Here we validate if the name input was valid, if not we repeat until the user enter a valid value
-std::string Character::CreateCharacterName() const
+string Character::CreateCharacterName() const
 {
-	std::string name;
+	string name;
 	bool is_choice_needed = true;
 
 	std::cout << "\nCharacter name: ";
@@ -60,7 +60,7 @@ std::string Character::CreateCharacterName() const
 
 		if (name.empty())
 		{
-			std::cout << "\nInvalid name input, try again: ";
+			cout << "\nInvalid name input, try again: ";
 		}
 		else
 		{
@@ -72,11 +72,10 @@ std::string Character::CreateCharacterName() const
 }
 
 //function that will create each character
-Character* Character::CreateCharacter(int classIndex, std::string name, int player_index)
+Character* Character::CreateCharacter(int classIndex, string name, int player_index)
 {
 	const auto character = new Character();
 
-	//fixed the switch, so we are comparing numbers, not strings.
 	switch (classIndex)
 	{
 	case 1:
@@ -142,7 +141,7 @@ Character* Character::CreateCharacter(int classIndex, std::string name, int play
 	return character;
 }
 
-void Character::TakeDamage(float amount)
+void Character::TakeDamage(float& amount)
 {
 	//fixed the amount of damage the player will receive
 	if ((health -= amount) <= 0)
@@ -160,15 +159,14 @@ void Character::Die()
 
 
 //In this function we first define who is our character and where he is, after that we get a occupied GridBox index and check if there is any around our character that is occupied.
-bool Character::CheckCloseTargets(Grid * battlefield) const
+bool Character::CheckCloseTargets(Grid* battlefield) const
 {
 	int player_index = this->current_box.index;
 
 	const auto it = std::find_if(battlefield->grids.begin(), battlefield->grids.end(),
 		[&player_index](const Types::GridBox& grid_box)
 		{
-			return grid_box.occupied == true && grid_box.index !=
-				player_index;
+			return grid_box.occupied == true && grid_box.index != player_index;
 		});
 
 	//here we check if the acquired location of our enemy is in range of our attacks
@@ -179,29 +177,29 @@ bool Character::CheckCloseTargets(Grid * battlefield) const
 }
 
 //this way we can choose where we should go with more simplicity
-void Character::WalkLeft(Battlefield * battlefield, int listPosition)
+void Character::WalkLeft(Battlefield* battlefield, int& listPosition)
 {
 	Move(battlefield, -1, listPosition, "left");
 }
 
-void Character::WalkRight(Battlefield * battlefield, int listPosition)
+void Character::WalkRight(Battlefield* battlefield, int& listPosition)
 {
 	Move(battlefield, 1, listPosition, "right");
 }
 
-void Character::WalkUp(Battlefield * battlefield, int listPosition)
+void Character::WalkUp(Battlefield* battlefield, int& listPosition)
 {
 	Move(battlefield, -battlefield->grid->y_length, listPosition, "up");
 }
 
-void Character::WalkDown(Battlefield * battlefield, int listPosition)
+void Character::WalkDown(Battlefield* battlefield, int& listPosition)
 {
 	Move(battlefield, battlefield->grid->y_length, listPosition, "down");
 }
 
 
 //created a main move function that will be used to moeve the character accordingly to the position requested
-void Character::Move(Battlefield * battlefield, int offset, int listPosition, std::string direction)
+void Character::Move(Battlefield* battlefield, int offset, int& listPosition, string direction)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -212,7 +210,7 @@ void Character::Move(Battlefield * battlefield, int offset, int listPosition, st
 	std::cout << "Player " << player_index << " walked " << direction << "\n";
 }
 
-void Character::MoveToEnemy(Battlefield * battlefield)
+void Character::MoveToEnemy(Battlefield* battlefield)
 {
 	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
 	int listPosition = 0;
@@ -249,9 +247,9 @@ void Character::Attack() const
 	//added a crititical chance function so we can use the damage multiplier.
 
 	int criticalChance = Shared::GetRandomInt(0, 100);
-	float damage = base_damage;
+	float damage = 0;
 
-	if (criticalChance < criticalHitChance )
+	if (criticalChance < criticalHitChance)
 	{
 		damage = base_damage * damage_multiplier;
 	}
@@ -259,7 +257,6 @@ void Character::Attack() const
 	{
 		damage = base_damage;
 	}
-
 
 	std::cout << "Player " << player_index << " is attacking the player " << target->player_index <<
 		"  and did " <<

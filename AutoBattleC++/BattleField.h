@@ -38,10 +38,11 @@ public:
 	}
 
 	//Function to create the battlefield
-	Grid* CreateBattleField(int Lines, int Columns);
+	Grid* CreateBattleField(int& Lines, int& Columns);
 
-	//We should have only one function for player alocation.
+	//Allocate player on the battlefield
 	void AlocatePlayer(Character* player);
+
 	void ValidateBattlefieldDimensions(int& lines, int& columns) const;
 
 	//function to draw the battlefield

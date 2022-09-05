@@ -45,7 +45,7 @@ public:
 	}
 
 	//made this function use the amount variable
-	void TakeDamage(float amount);
+	void TakeDamage(float& amount);
 
 	//deleted get index function, it was not implemented or used anywhere 
 
@@ -56,13 +56,13 @@ public:
 	//refactored this function so now it works better
 	bool CheckCloseTargets(Grid* battlefield) const;
 	//Created functions so we can choose to where we want to walk with more simplicity.
-	void WalkLeft(Battlefield* battlefield, int listPosition);
-	void WalkRight(Battlefield* battlefield, int listPosition);
-	void WalkUp(Battlefield* battlefield, int listPosition);
-	void WalkDown(Battlefield* battlefield, int listPosition);
+	void WalkLeft(Battlefield* battlefield, int& listPosition);
+	void WalkRight(Battlefield* battlefield, int& listPosition);
+	void WalkUp(Battlefield* battlefield, int& listPosition);
+	void WalkDown(Battlefield* battlefield, int& listPosition);
 
 	//created a move function to simplify our movement, there is no need to have this code repeat when we are moving to any direction
-	void Move(Battlefield* battlefield, int offset, int listPosition, std::string direction);
+	void Move(Battlefield* battlefield, int offset, int& listPosition, std::string direction);
 
 	//a simple validation for the player input
 	int ValidateClassInput() const;

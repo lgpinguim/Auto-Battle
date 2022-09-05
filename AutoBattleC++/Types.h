@@ -7,11 +7,11 @@ public:
 	{
 		int x_index{};
 		int y_index{};
-		bool occupied{};
+		bool occupied{false};
 		int index{};
 
 		//constructor with the variables initialized
-		GridBox(int x, int y, bool occupied, int index) : x_index(x), y_index(y), index(index)
+		GridBox(int x, int y,int index) : x_index(x), y_index(y), index(index)
 		{
 		}
 
