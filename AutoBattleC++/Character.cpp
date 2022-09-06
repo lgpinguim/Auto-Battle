@@ -72,68 +72,68 @@ string Character::CreateCharacterName() const
 }
 
 //function that will create each character
-Character* Character::CreateCharacter(int classIndex, string name, int player_index)
+Character* Character::CreateCharacter(int& classIndex, string& name, int player_index)
 {
 	const auto character = new Character();
 
 	switch (classIndex)
 	{
 	case 1:
-	{
-		//paladins have more health
-		character->health = 130;
-		character->base_damage = 20;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.1f;
-		character->criticalHitChance = 10;
-		character->character_class = Types::CharacterClass::Paladin;
-		character->name = name + " the paladin ";
-		character->icon = 'P';
-		std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
-		break;
-	}
+		{
+			//paladins have more health
+			character->health = 130;
+			character->base_damage = 20;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.1f;
+			character->criticalHitChance = 10;
+			character->character_class = Types::CharacterClass::Paladin;
+			character->name = name + " the paladin ";
+			character->icon = 'P';
+			std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
+			break;
+		}
 	case 2:
-	{
-		//warriors more damage
-		character->health = 80;
-		character->base_damage = 25;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.1f;
-		character->criticalHitChance = 15;
-		character->character_class = Types::CharacterClass::Warrior;
-		character->name = name + " the warrior";
-		character->icon = 'W';
-		std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
-		break;
-	}
+		{
+			//warriors more damage
+			character->health = 80;
+			character->base_damage = 25;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.1f;
+			character->criticalHitChance = 15;
+			character->character_class = Types::CharacterClass::Warrior;
+			character->name = name + " the warrior";
+			character->icon = 'W';
+			std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
+			break;
+		}
 	case 3:
-	{
-		//clerics have higher critical damage
-		character->health = 100;
-		character->base_damage = 15;
-		character->player_index = player_index;
-		character->damage_multiplier = 3.0f;
-		character->criticalHitChance = 15;
-		character->character_class = Types::CharacterClass::Cleric;
-		character->name = name + " the cleric";
-		character->icon = 'C';
-		std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
-		break;
-	}
+		{
+			//clerics have higher critical damage
+			character->health = 100;
+			character->base_damage = 15;
+			character->player_index = player_index;
+			character->damage_multiplier = 3.0f;
+			character->criticalHitChance = 15;
+			character->character_class = Types::CharacterClass::Cleric;
+			character->name = name + " the cleric";
+			character->icon = 'C';
+			std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
+			break;
+		}
 	case 4:
-	{
-		//archers have higher critical chance
-		character->health = 100;
-		character->base_damage = 20;
-		character->player_index = player_index;
-		character->damage_multiplier = 1.5f;
-		character->criticalHitChance = 25;
-		character->character_class = Types::CharacterClass::Archer;
-		character->name = name + " the archer";
-		character->icon = 'A';
-		std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
-		break;
-	}
+		{
+			//archers have higher critical chance
+			character->health = 100;
+			character->base_damage = 20;
+			character->player_index = player_index;
+			character->damage_multiplier = 1.5f;
+			character->criticalHitChance = 25;
+			character->character_class = Types::CharacterClass::Archer;
+			character->name = name + " the archer";
+			character->icon = 'A';
+			std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
+			break;
+		}
 	default:
 		break;
 	}
@@ -163,11 +163,11 @@ bool Character::CheckCloseTargets(Grid* battlefield) const
 {
 	int player_index = this->current_box.index;
 
-	const auto it = std::find_if(battlefield->grids.begin(), battlefield->grids.end(),
-		[&player_index](const Types::GridBox& grid_box)
-		{
-			return grid_box.occupied == true && grid_box.index != player_index;
-		});
+	const auto it = find_if(battlefield->grids.begin(), battlefield->grids.end(),
+	                             [&player_index](const Types::GridBox& grid_box)
+	                             {
+		                             return grid_box.occupied == true && grid_box.index != player_index;
+	                             });
 
 	//here we check if the acquired location of our enemy is in range of our attacks
 	return ((current_box.x_index - 1 == it->x_index && current_box.y_index == it->y_index)
@@ -177,67 +177,65 @@ bool Character::CheckCloseTargets(Grid* battlefield) const
 }
 
 //this way we can choose where we should go with more simplicity
-void Character::WalkLeft(Battlefield* battlefield, int& listPosition)
+void Character::WalkLeft(Battlefield* battlefield, int& list_position)
 {
-	Move(battlefield, -1, listPosition, "left");
+	Move(battlefield, -1, list_position, "left");
 }
 
-void Character::WalkRight(Battlefield* battlefield, int& listPosition)
+void Character::WalkRight(Battlefield* battlefield, int& list_position)
 {
-	Move(battlefield, 1, listPosition, "right");
+	Move(battlefield, 1, list_position, "right");
 }
 
-void Character::WalkUp(Battlefield* battlefield, int& listPosition)
+void Character::WalkUp(Battlefield* battlefield, int& list_position)
 {
-	Move(battlefield, -battlefield->grid->y_length, listPosition, "up");
+	Move(battlefield, -battlefield->grid->y_length, list_position, "up");
 }
 
-void Character::WalkDown(Battlefield* battlefield, int& listPosition)
+void Character::WalkDown(Battlefield* battlefield, int& list_position)
 {
-	Move(battlefield, battlefield->grid->y_length, listPosition, "down");
+	Move(battlefield, battlefield->grid->y_length, list_position, "down");
 }
 
 
 //created a main move function that will be used to moeve the character accordingly to the position requested
-void Character::Move(Battlefield* battlefield, int offset, int& listPosition, string direction)
+void Character::Move(Battlefield* battlefield, int offset, int& list_position, string direction)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
 	current_box = (battlefield->grid->grids[current_box.index + (offset)]);
 	current_box.occupied = true;
 	battlefield->grid->grids[current_box.index] = current_box;
-	battlefield->index_location_of_each_player[listPosition] = current_box.index;
+	battlefield->index_location_of_each_player[list_position] = current_box.index;
 	std::cout << "Player " << player_index << " walked " << direction << "\n";
 }
 
 void Character::MoveToEnemy(Battlefield* battlefield)
 {
 	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
-	int listPosition = 0;
+	int list_position = 0;
 
 	for (int i : battlefield->index_location_of_each_player)
 	{
-
-		listPosition = i == current_box.index ? 1 : listPosition;
-
+		list_position = i == current_box.index ? 1 : list_position;
 	}
 
 	//each one of the ifs below checks where the enemy is and move the character one step closer to it.
 	if (current_box.x_index > target->current_box.x_index)
 	{
-		WalkLeft(battlefield, listPosition);
+		WalkLeft(battlefield, list_position);
 	}
 	else if (this->current_box.x_index < target->current_box.x_index)
 	{
-		WalkRight(battlefield, listPosition);
+		WalkRight(battlefield, list_position);
 	}
 	else if (current_box.y_index > target->current_box.y_index)
 	{
-		WalkUp(battlefield, listPosition);
+		WalkUp(battlefield, list_position);
 	}
 	else if (current_box.y_index < target->current_box.y_index)
 	{
-		WalkDown(battlefield, listPosition);
+		WalkDown(battlefield, list_position);
 	}
 }
 
@@ -246,10 +244,10 @@ void Character::Attack() const
 {
 	//added a crititical chance function so we can use the damage multiplier.
 
-	int criticalChance = Shared::GetRandomInt(0, 100);
+	int critical_chance = Shared::GetRandomInt(0, 100);
 	float damage = 0;
 
-	if (criticalChance < criticalHitChance)
+	if (critical_chance < criticalHitChance)
 	{
 		damage = base_damage * damage_multiplier;
 	}
@@ -258,7 +256,7 @@ void Character::Attack() const
 		damage = base_damage;
 	}
 
-	std::cout << "Player " << player_index << " is attacking the player " << target->player_index <<
+	cout << "Player " << player_index << " is attacking the player " << target->player_index <<
 		"  and did " <<
 		damage << " damage\n";
 	target->TakeDamage(damage);

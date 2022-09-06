@@ -31,25 +31,26 @@ Battlefield::Battlefield()
 //function used to create the battlefield and store how many tiles we have
 Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 {
-	const auto newGrid = new Grid(Lines, Columns);
-	std::cout << "\nThe battlefield has been created\n";
-	setGrid(newGrid);
-	number_of_possible_tiles = newGrid->x_length * newGrid->y_length;
-	return newGrid;
+	const auto new_grid = new Grid(Lines, Columns);
+	cout << "\nThe battlefield has been created\n";
+	setGrid(new_grid);
+	number_of_possible_tiles = new_grid->x_length * new_grid->y_length;
+	return new_grid;
 }
 
 
 //Removed both alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
-	bool searching_valid_position =true;
+	bool searching_valid_position = true;
 	//Improved performance and confiability using while instead of recursiveness.
-	while (searching_valid_position) {
+	while (searching_valid_position)
+	{
 		const int random = Shared::GetRandomInt(0, number_of_possible_tiles - 1);
 		auto l_front = grid->grids.begin();
 		advance(l_front, random);
-		const Types::GridBox* RandomLocation = &*l_front;
-		if (!RandomLocation->occupied) 
+		const Types::GridBox* random_location = &*l_front;
+		if (!random_location->occupied)
 		{
 			index_location_of_each_player.push_back(l_front->index);
 			l_front->occupied = true;
@@ -63,9 +64,9 @@ void Battlefield::AlocatePlayer(Character* player)
 //a simple validator before we create the battlefield
 void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 {
-	bool incorrectInput = true;
+	bool incorrect_input = true;
 
-	while (incorrectInput)
+	while (incorrect_input)
 	{
 		//Building the map
 		std::cout << "Please choose the map height: ";
@@ -83,7 +84,7 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 
 		if (lines >= 2 && is_valid_matrix_size)
 		{
-			incorrectInput = false;
+			incorrect_input = false;
 		}
 		else
 		{
@@ -102,13 +103,13 @@ void Battlefield::DrawBattlefield(const std::vector<Character*>& all_players) co
 	{
 		for (int j = 0; j < this->grid->y_length; j++)
 		{
-			const Types::GridBox currentGrid = grid->grids[index]; //fixed typo on variable name
+			const Types::GridBox current_grid = grid->grids[index]; //fixed typo on variable name
 
-			if (currentGrid.occupied)
+			if (current_grid.occupied)
 			{
 				for (const auto player : all_players)
 				{
-					if (player->current_box.index == currentGrid.index)
+					if (player->current_box.index == current_grid.index)
 					{
 						cout << "[" << player->icon << "]\t";
 					}

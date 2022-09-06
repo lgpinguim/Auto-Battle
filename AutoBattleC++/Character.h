@@ -18,9 +18,8 @@ public:
 	~Character();
 
 
-
 	//standardized the properties names to snake_case, following C++ conventions  and initialized them
-	
+
 	std::string name{};
 	float health{};
 	float base_damage{};
@@ -36,7 +35,7 @@ public:
 
 
 	// this class should not be anywhere else, we should only create characters using the character class
-	static Character* CreateCharacter(int classIndex, std::string name, int player_index);
+	static Character* CreateCharacter(int& classIndex, std::string& name, int player_index);
 
 	//created a setter for target
 	void SetTarget(Character* t)
@@ -56,13 +55,13 @@ public:
 	//refactored this function so now it works better
 	bool CheckCloseTargets(Grid* battlefield) const;
 	//Created functions so we can choose to where we want to walk with more simplicity.
-	void WalkLeft(Battlefield* battlefield, int& listPosition);
-	void WalkRight(Battlefield* battlefield, int& listPosition);
-	void WalkUp(Battlefield* battlefield, int& listPosition);
-	void WalkDown(Battlefield* battlefield, int& listPosition);
+	void WalkLeft(Battlefield* battlefield, int& list_position);
+	void WalkRight(Battlefield* battlefield, int& list_position);
+	void WalkUp(Battlefield* battlefield, int& list_position);
+	void WalkDown(Battlefield* battlefield, int& list_position);
 
 	//created a move function to simplify our movement, there is no need to have this code repeat when we are moving to any direction
-	void Move(Battlefield* battlefield, int offset, int& listPosition, std::string direction);
+	void Move(Battlefield* battlefield, int offset, int& list_position, std::string direction);
 
 	//a simple validation for the player input
 	int ValidateClassInput() const;
@@ -76,5 +75,3 @@ public:
 	//implemented the attack function.
 	void Attack() const;
 };
-
-

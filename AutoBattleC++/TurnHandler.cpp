@@ -6,13 +6,14 @@
 #include "Shared.h"
 
 
+using namespace std;
+
 TurnHandler::TurnHandler()
 = default;
 
 //modernized the destructor class.
 TurnHandler::~TurnHandler()
 = default;
-
 
 
 void TurnHandler::StartGame()
@@ -70,7 +71,6 @@ void TurnHandler::StartGame()
 		}
 
 		startingPlayer = startingPlayer == 0 ? 1 : 0;
-
 	}
 }
 
@@ -79,12 +79,12 @@ void TurnHandler::StartTurn()
 {
 	if (all_players[0]->health <= 0)
 	{
-		std::cout << "\nGAME OVER! you lost the game!\n";
+		cout << "\nGAME OVER! you lost the game!\n";
 		EndGame();
 	}
 	else if (all_players[1]->health <= 0)
 	{
-		std::cout << "\nCongratulations! "  << all_players[0]->name <<  "won the game!\n";
+		cout << "\nCongratulations! " << all_players[0]->name << "won the game!\n";
 		EndGame();
 	}
 	else if (game_end == false)
@@ -131,14 +131,14 @@ void TurnHandler::HandleTurn(int starting_player) const
 //Here we finish the game and ask if the player wants another round
 void TurnHandler::EndGame()
 {
-	std::cout << "the game has ended!";
+	cout << "the game has ended!";
 	game_end = true;
-	std::cout << "\nPlay again? (y/n): ";
-	std::string input;
+	cout << "\nPlay again? (y/n): ";
+	string input;
 	getline(std::cin, input);
 
 
-	if (input == "y" || input=="Y")
+	if (input == "y" || input == "Y")
 	{
 		//here we dealocate and delete our pointers so we wont use more memory each time we run
 		for (const auto player : all_players)
@@ -150,7 +150,7 @@ void TurnHandler::EndGame()
 
 		delete battlefield;
 
-		std::cout.clear();
+		cout.clear();
 
 		system("CLS");
 
@@ -160,6 +160,6 @@ void TurnHandler::EndGame()
 	else
 	{
 		game_end = true;
-		std::cout << "Thank you for playing!";
+		cout << "Thank you for playing!";
 	}
 }
