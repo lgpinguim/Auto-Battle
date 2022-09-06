@@ -15,6 +15,4 @@ public:
 	int x_length; //fixed typo here
 	int y_length;
 
-	//Removed dr
-	//changed variable names to C++ standards
 };

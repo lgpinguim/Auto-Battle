@@ -103,7 +103,7 @@ void Battlefield::DrawBattlefield(const std::vector<Character*>& all_players) co
 	{
 		for (int j = 0; j < this->grid->y_length; j++)
 		{
-			const Types::GridBox current_grid = grid->grids[index]; //fixed typo on variable name
+			const Types::GridBox current_grid = grid->grids[index]; 
 
 			if (current_grid.occupied)
 			{

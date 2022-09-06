@@ -12,3 +12,4 @@ int Shared::GetRandomInt(int min, int max)
 	default_random_engine generator(rd());
 	return distribution(generator);
 }
+

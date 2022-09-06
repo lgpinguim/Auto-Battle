@@ -11,12 +11,8 @@ using namespace std;
 TurnHandler::TurnHandler()
 = default;
 
-//modernized the destructor class.
-TurnHandler::~TurnHandler()
-= default;
 
-
-void TurnHandler::StartGame()
+void TurnHandler::SetUpGame()
 {
 	// variable initialization
 	auto player_character = new Character();
@@ -34,7 +30,7 @@ void TurnHandler::StartGame()
 
 	//input for class and name validation
 	int class_index = player_character->ValidateClassInput();
-	std::string name = player_character->CreateCharacterName();
+	string name = player_character->CreateCharacterName();
 
 	//player character validation
 	player_character = Character::CreateCharacter(class_index, name, 1);
@@ -55,6 +51,16 @@ void TurnHandler::StartGame()
 	{
 		battlefield->AlocatePlayer(player);
 	}
+}
+
+void TurnHandler::FlipPlayerTurn(int& starting_player)
+{
+	starting_player = starting_player == 0 ? 1 : 0;
+}
+
+void TurnHandler::StartGame()
+{
+	SetUpGame();
 
 	//a simple random to determine who will start the game
 	int starting_player = Shared::GetRandomInt(0, 1);
@@ -66,11 +72,11 @@ void TurnHandler::StartGame()
 
 		if (game_end == false)
 		{
-			std::cout << "Current turn: " << ++current_turn << "\n";
-			HandleTurn(starting_player);
+			cout << "Current turn: " << ++current_turn << "\n";
+			HandleTurn(all_players[starting_player]);
 		}
 
-		starting_player = starting_player == 0 ? 1 : 0;
+		FlipPlayerTurn(starting_player);
 	}
 }
 
@@ -90,42 +96,22 @@ void TurnHandler::StartTurn()
 	else if (game_end == false)
 	{
 		printf("\n");
-		printf("Click on any key to start the next turn...\n");
+		system("pause");
 		printf("\n");
-		std::cin.get();
 	}
 }
 
-//here each character will have the opportunity to check if the enemy is close and move, or attack.
-void TurnHandler::HandleTurn(int starting_player) const
+void TurnHandler::HandleTurn(Character* player) const
 {
-	if (starting_player == 0)
+	const bool can_attack = player->CheckCloseTargets(battlefield->grid);
+	if (can_attack)
 	{
-		//if we can attack we will attack, else we move 
-		const bool can_attack = all_players[0]->CheckCloseTargets(battlefield->grid);
-		if (can_attack && all_players[0]->is_dead == false)
-		{
-			all_players[0]->Attack();
-		}
-		else
-		{
-			all_players[0]->MoveToEnemy(battlefield);
-			battlefield->DrawBattlefield(all_players);
-		}
+		player->Attack();
+		return;
 	}
-	else
-	{
-		const bool can_attack = all_players[1]->CheckCloseTargets(battlefield->grid);
-		if (can_attack && all_players[0]->is_dead == false)
-		{
-			all_players[1]->Attack();
-		}
-		else
-		{
-			all_players[1]->MoveToEnemy(battlefield);
-			battlefield->DrawBattlefield(all_players);
-		}
-	}
+
+	player->MoveToEnemy(battlefield);
+	battlefield->DrawBattlefield(all_players);
 }
 
 //Here we finish the game and ask if the player wants another round
@@ -135,8 +121,7 @@ void TurnHandler::EndGame()
 	game_end = true;
 	cout << "\nPlay again? (y/n): ";
 	string input;
-	getline(std::cin, input);
-
+	getline(cin, input);
 
 	if (input == "y" || input == "Y")
 	{
@@ -151,7 +136,6 @@ void TurnHandler::EndGame()
 		delete battlefield;
 
 		cout.clear();
-		
 
 		StartGame();
 	}

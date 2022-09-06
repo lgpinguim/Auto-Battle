@@ -26,12 +26,12 @@ int Character::ValidateClassInput() const
 	while (is_choice_needed)
 	{
 		string choice;
-		getline(std::cin, choice);
+		getline(cin, choice);
 		class_index = atoi(choice.c_str());
 
 		if (choice.empty() || class_index < 1 || class_index > 4)
 		{
-			std::cout << "invalid class number input, please try again: \n";
+			cout << "invalid class number input, please try again: \n";
 		}
 		else
 		{
@@ -49,11 +49,11 @@ string Character::CreateCharacterName() const
 	string name;
 	bool is_choice_needed = true;
 
-	std::cout << "\nCharacter name: ";
+	cout << "\nCharacter name: ";
 
 	while (is_choice_needed)
 	{
-		getline(std::cin, name);
+		getline(cin, name);
 
 		if (name.empty())
 		{
@@ -86,7 +86,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->character_class = Types::CharacterClass::Paladin;
 			character->name = name + " the paladin ";
 			character->icon = 'P';
-			std::cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
+			cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
 			break;
 		}
 	case 2:
@@ -100,7 +100,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->character_class = Types::CharacterClass::Warrior;
 			character->name = name + " the warrior";
 			character->icon = 'W';
-			std::cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
+			cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
 			break;
 		}
 	case 3:
@@ -114,7 +114,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->character_class = Types::CharacterClass::Cleric;
 			character->name = name + " the cleric";
 			character->icon = 'C';
-			std::cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
+			cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
 			break;
 		}
 	case 4:
@@ -128,7 +128,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->character_class = Types::CharacterClass::Archer;
 			character->name = name + " the archer";
 			character->icon = 'A';
-			std::cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
+			cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
 			break;
 		}
 	default:
@@ -151,7 +151,7 @@ void Character::TakeDamage(float& amount)
 void Character::Die()
 {
 	this->is_dead = true;
-	std::cout << this->name << " is dead! \n";
+	cout << this->name << " is dead! \n";
 }
 
 
@@ -204,7 +204,7 @@ void Character::Move(Battlefield* battlefield, int offset, int& list_position, s
 	current_box.occupied = true;
 	battlefield->grid->grids[current_box.index] = current_box;
 	battlefield->index_location_of_each_player[list_position] = current_box.index;
-	std::cout << "Player " << player_index << " walked " << direction << "\n";
+	cout << "Player " << player_index << " walked " << direction << "\n";
 }
 
 void Character::MoveToEnemy(Battlefield* battlefield)
@@ -212,9 +212,9 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
 	int list_position = 0;
 
-	for (int i : battlefield->index_location_of_each_player)
+	for (int iterator : battlefield->index_location_of_each_player)
 	{
-		list_position = i == current_box.index ? 1 : list_position;
+		list_position = iterator == current_box.index ? 1 : list_position;
 	}
 
 	//each one of the ifs below checks where the enemy is and move the character one step closer to it.

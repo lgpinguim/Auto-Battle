@@ -10,7 +10,6 @@ public:
 	//Created this class to better segregate the responsibilities between classes
 	//This class will be responsible for handling the turns of the game.
 	TurnHandler();
-	~TurnHandler();
 
 	//List of players
 	std::vector<Character*> all_players;
@@ -26,11 +25,14 @@ public:
 	//builds everything needed by the game
 	void StartGame();
 
+	void SetUpGame();
+	void FlipPlayerTurn(int& starting_player);
+
 	//starts the turn and sets who will play
 	void StartTurn();
 
 	// function responsible for handling the current turn
-	void HandleTurn(int starting_player) const;
+	void HandleTurn(Character* player) const;
 
 	//finishes the game
 	void EndGame();
