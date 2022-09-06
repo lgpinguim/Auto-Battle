@@ -8,8 +8,7 @@ class Grid
 {
 public:
 	//changed variable names to C++ standards
-	Grid(int lines, int columns);
-	~Grid();
+	Grid(int& lines, int& columns);
 
 	std::vector<Types::GridBox> grids;
 

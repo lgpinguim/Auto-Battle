@@ -5,7 +5,7 @@
 
 int main()
 {
-	const auto turnHandler = new TurnHandler();
+	const auto turn_handler = new TurnHandler();
 
-	turnHandler->StartGame();
+	turn_handler->StartGame();
 }

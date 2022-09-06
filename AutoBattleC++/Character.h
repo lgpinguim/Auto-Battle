@@ -7,7 +7,7 @@
 #include "Character.h"
 #include "Types.h"
 
-//made a foward declaration to the battlefield class so we can use it here
+//made a forward declaration to the battlefield class so we can use it here
 class Battlefield;
 
 class Character
@@ -15,7 +15,6 @@ class Character
 public:
 	//Fixed spelling mistakes and created a empty constructor so we can create characters
 	Character();
-	~Character();
 
 
 	//standardized the properties names to snake_case, following C++ conventions  and initialized them
@@ -27,7 +26,7 @@ public:
 	//removed comment from GridBox and fixed the name.
 	Types::GridBox current_box;
 	Types::CharacterClass character_class{};
-	int criticalHitChance{}; //added a crititical chance for our characters.
+	int critical_hit_chance{}; //added a critical chance for our characters.
 	int player_index{};
 	Character* target{};
 	bool is_dead{false};
@@ -35,7 +34,7 @@ public:
 
 
 	// this class should not be anywhere else, we should only create characters using the character class
-	static Character* CreateCharacter(int& classIndex, std::string& name, int player_index);
+	static Character* CreateCharacter(int& class_index, std::string& name, int player_index);
 
 	//created a setter for target
 	void SetTarget(Character* t)

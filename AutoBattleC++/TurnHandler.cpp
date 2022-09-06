@@ -57,7 +57,7 @@ void TurnHandler::StartGame()
 	}
 
 	//a simple random to determine who will start the game
-	int startingPlayer = Shared::GetRandomInt(0, 1);
+	int starting_player = Shared::GetRandomInt(0, 1);
 
 	//here is where our turns will happen
 	while (game_end == false)
@@ -67,10 +67,10 @@ void TurnHandler::StartGame()
 		if (game_end == false)
 		{
 			std::cout << "Current turn: " << ++current_turn << "\n";
-			HandleTurn(startingPlayer);
+			HandleTurn(starting_player);
 		}
 
-		startingPlayer = startingPlayer == 0 ? 1 : 0;
+		starting_player = starting_player == 0 ? 1 : 0;
 	}
 }
 
@@ -151,8 +151,7 @@ void TurnHandler::EndGame()
 		delete battlefield;
 
 		cout.clear();
-
-		system("CLS");
+		
 
 		StartGame();
 	}

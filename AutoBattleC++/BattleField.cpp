@@ -33,7 +33,7 @@ Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 {
 	const auto new_grid = new Grid(Lines, Columns);
 	cout << "\nThe battlefield has been created\n";
-	setGrid(new_grid);
+	SetGrid(new_grid);
 	number_of_possible_tiles = new_grid->x_length * new_grid->y_length;
 	return new_grid;
 }
@@ -69,13 +69,13 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 	while (incorrect_input)
 	{
 		//Building the map
-		std::cout << "Please choose the map height: ";
-		std::string height;
-		getline(std::cin, height);
+		cout << "Please choose the map height: ";
+		string height;
+		getline(cin, height);
 
-		std::cout << "Please choose the map width: ";
-		std::string width;
-		getline(std::cin, width);
+		cout << "Please choose the map width: ";
+		string width;
+		getline(cin, width);
 
 
 		lines = atoi(height.c_str());
@@ -88,7 +88,7 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 		}
 		else
 		{
-			std::cout << "Wrong dimensions, please try again!\n";
+			cout << "Wrong dimensions, please try again!\n";
 		}
 	}
 }

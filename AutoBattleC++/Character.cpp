@@ -12,9 +12,6 @@ using namespace std;
 Character::Character()
 = default;
 
-//modernized the destructor class.
-Character::~Character()
-= default;
 
 //Here we validate if the class input was valid, if not we repeat until the user enter a valid value
 int Character::ValidateClassInput() const
@@ -72,11 +69,11 @@ string Character::CreateCharacterName() const
 }
 
 //function that will create each character
-Character* Character::CreateCharacter(int& classIndex, string& name, int player_index)
+Character* Character::CreateCharacter(int& class_index, string& name, int player_index)
 {
 	const auto character = new Character();
 
-	switch (classIndex)
+	switch (class_index)
 	{
 	case 1:
 		{
@@ -85,7 +82,7 @@ Character* Character::CreateCharacter(int& classIndex, string& name, int player_
 			character->base_damage = 20;
 			character->player_index = player_index;
 			character->damage_multiplier = 1.1f;
-			character->criticalHitChance = 10;
+			character->critical_hit_chance = 10;
 			character->character_class = Types::CharacterClass::Paladin;
 			character->name = name + " the paladin ";
 			character->icon = 'P';
@@ -99,7 +96,7 @@ Character* Character::CreateCharacter(int& classIndex, string& name, int player_
 			character->base_damage = 25;
 			character->player_index = player_index;
 			character->damage_multiplier = 1.1f;
-			character->criticalHitChance = 15;
+			character->critical_hit_chance = 15;
 			character->character_class = Types::CharacterClass::Warrior;
 			character->name = name + " the warrior";
 			character->icon = 'W';
@@ -113,7 +110,7 @@ Character* Character::CreateCharacter(int& classIndex, string& name, int player_
 			character->base_damage = 15;
 			character->player_index = player_index;
 			character->damage_multiplier = 3.0f;
-			character->criticalHitChance = 15;
+			character->critical_hit_chance = 15;
 			character->character_class = Types::CharacterClass::Cleric;
 			character->name = name + " the cleric";
 			character->icon = 'C';
@@ -127,7 +124,7 @@ Character* Character::CreateCharacter(int& classIndex, string& name, int player_
 			character->base_damage = 20;
 			character->player_index = player_index;
 			character->damage_multiplier = 1.5f;
-			character->criticalHitChance = 25;
+			character->critical_hit_chance = 25;
 			character->character_class = Types::CharacterClass::Archer;
 			character->name = name + " the archer";
 			character->icon = 'A';
@@ -198,7 +195,7 @@ void Character::WalkDown(Battlefield* battlefield, int& list_position)
 }
 
 
-//created a main move function that will be used to moeve the character accordingly to the position requested
+//created a main move function that will be used to move the character accordingly to the position requested
 void Character::Move(Battlefield* battlefield, int offset, int& list_position, string direction)
 {
 	current_box.occupied = false;
@@ -247,7 +244,7 @@ void Character::Attack() const
 	int critical_chance = Shared::GetRandomInt(0, 100);
 	float damage = 0;
 
-	if (critical_chance < criticalHitChance)
+	if (critical_chance < critical_hit_chance)
 	{
 		damage = base_damage * damage_multiplier;
 	}

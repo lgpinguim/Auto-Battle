@@ -32,13 +32,13 @@ public:
 	//Added Function for battlefield creation
 
 	//Setter for Grid
-	void setGrid(Grid* g)
+	void SetGrid(Grid* g)
 	{
 		grid = g;
 	}
 
 	//Function to create the battlefield
-	Grid* CreateBattleField(int& Lines, int& Columns);
+	Grid* CreateBattleField(int& lines, int& columns);
 
 	//Allocate player on the battlefield
 	void AlocatePlayer(Character* player);

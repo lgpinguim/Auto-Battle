@@ -11,7 +11,7 @@ public:
 		int index{};
 
 		//constructor with the variables initialized
-		GridBox(int x, int y, int index) : x_index(x), y_index(y), index(index)
+		GridBox(const int x, const int y, const int index) : x_index(x), y_index(y), index(index)
 		{
 		}
 
