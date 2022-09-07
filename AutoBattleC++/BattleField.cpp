@@ -12,23 +12,6 @@ using namespace std;
 Battlefield::Battlefield()
 = default;
 
-//removed Get player choice, there is no need to have that here, as I created a class to handle the game turns
-
-//removed Create Player Character, there is no need to have that here, only the Character class
-//should create new characters;
-
-//removed Create Enemy Character, there is no need to have that here, only the Character class
-//should create new characters;
-
-//removed start turn, as I created a Turn handler for handling the flow of the game;
-
-//removed start turn, as I created a Turn handler for handling the flow of the game;
-
-//removed handle turn, as I created a Turn handler for handling the flow of the game;
-
-//Removed get random int, as it was a malpractice 
-
-//function used to create the battlefield and store how many tiles we have
 Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 {
 	const auto new_grid = new Grid(Lines, Columns);
@@ -39,11 +22,10 @@ Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 }
 
 
-//Removed both alocate player and enemy functions, created a generic alocate function
 void Battlefield::AlocatePlayer(Character* player)
 {
 	bool searching_valid_position = true;
-	//Improved performance and confiability using while instead of recursiveness.
+
 	while (searching_valid_position)
 	{
 		const int random = Shared::GetRandomInt(0, number_of_possible_tiles - 1);
@@ -60,15 +42,12 @@ void Battlefield::AlocatePlayer(Character* player)
 	}
 }
 
-
-//a simple validator before we create the battlefield
 void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 {
 	bool incorrect_input = true;
 
 	while (incorrect_input)
 	{
-		//Building the map
 		cout << "Please choose the map height: ";
 		string height;
 		getline(cin, height);
@@ -76,7 +55,6 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 		cout << "Please choose the map width: ";
 		string width;
 		getline(cin, width);
-
 
 		lines = atoi(height.c_str());
 		columns = atoi(width.c_str());
@@ -93,9 +71,7 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 	}
 }
 
-//This was the function from GRID, here it makes more sense.
-//I also refactored the method so we can see the icon of each Character class.
-void Battlefield::DrawBattlefield(const std::vector<Character*>& all_players) const
+void Battlefield::DrawBattlefield(const vector<Character*>& all_players) const
 {
 	int index = 0;
 

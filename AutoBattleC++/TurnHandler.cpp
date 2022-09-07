@@ -12,27 +12,24 @@ TurnHandler::TurnHandler()
 = default;
 
 
-void TurnHandler::SetUpGame()
+void TurnHandler::SetupBattlefield()
 {
-	// variable initialization
-	auto player_character = new Character();
-	auto enemy_character = new Character();
-	battlefield = new Battlefield();
-	game_end = false;
-	current_turn = 0;
 	int lines;
 	int columns;
 
-	//here we validate the input creation of the battlefield
+	battlefield = new Battlefield();
 	battlefield->ValidateBattlefieldDimensions(lines, columns);
 	battlefield->grid = battlefield->CreateBattleField(lines, columns);
-	battlefield->DrawBattlefield(all_players);
+}
 
-	//input for class and name validation
+void TurnHandler::SetupPlayers()
+{
+	auto player_character = new Character();
+	auto enemy_character = new Character();
+
 	int class_index = player_character->ValidateClassInput();
 	string name = player_character->CreateCharacterName();
 
-	//player character validation
 	player_character = Character::CreateCharacter(class_index, name, 1);
 	all_players.push_back(player_character);
 
@@ -40,17 +37,35 @@ void TurnHandler::SetUpGame()
 	class_index = Shared::GetRandomInt(1, 4);
 	name = "Anakin";
 	enemy_character = Character::CreateCharacter(class_index, name, 2);
+
 	all_players.push_back(enemy_character);
 
-	//target setting
 	player_character->SetTarget(enemy_character);
 	enemy_character->SetTarget(player_character);
+}
 
-	//alocation of all characters to the battlefield
+void TurnHandler::AllocatePlayersOnBattlefield() const
+{
 	for (Character* player : all_players)
 	{
 		battlefield->AlocatePlayer(player);
 	}
+}
+
+void TurnHandler::SetUpGame()
+{
+	// variable initialization
+	game_end = false;
+	current_turn = 0;
+
+	SetupPlayers();
+
+	SetupBattlefield();
+
+	AllocatePlayersOnBattlefield();
+
+	battlefield->DrawBattlefield(all_players);
+
 }
 
 void TurnHandler::FlipPlayerTurn(int& starting_player)
@@ -66,11 +81,11 @@ void TurnHandler::StartGame()
 	int starting_player = Shared::GetRandomInt(0, 1);
 
 	//here is where our turns will happen
-	while (game_end == false)
+	while (!game_end)
 	{
 		StartTurn();
 
-		if (game_end == false)
+		if (!game_end)
 		{
 			cout << "Current turn: " << ++current_turn << "\n";
 			HandleTurn(all_players[starting_player]);
@@ -93,7 +108,7 @@ void TurnHandler::StartTurn()
 		cout << "\nCongratulations! " << all_players[0]->name << "won the game!\n";
 		EndGame();
 	}
-	else if (game_end == false)
+	else if (!game_end)
 	{
 		printf("\n");
 		system("pause");

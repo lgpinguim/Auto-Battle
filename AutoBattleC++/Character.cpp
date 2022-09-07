@@ -1,5 +1,5 @@
 #include "Grid.h"
-#include "Character.h" //deleted the other include, as it was unnecessary.
+#include "Character.h"
 #include "Types.h"
 #include <vector>
 #include <algorithm>
@@ -13,10 +13,8 @@ Character::Character()
 = default;
 
 
-//Here we validate if the class input was valid, if not we repeat until the user enter a valid value
 int Character::ValidateClassInput() const
 {
-	//asks for the player to choose between for possible classes via console.
 	cout << "Choose Between One of this Classes:\n";
 	cout << "[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer\n";
 
@@ -43,7 +41,6 @@ int Character::ValidateClassInput() const
 	return class_index;
 }
 
-//Here we validate if the name input was valid, if not we repeat until the user enter a valid value
 string Character::CreateCharacterName() const
 {
 	string name;
@@ -68,7 +65,6 @@ string Character::CreateCharacterName() const
 	return name;
 }
 
-//function that will create each character
 Character* Character::CreateCharacter(int& class_index, string& name, int player_index)
 {
 	const auto character = new Character();
@@ -140,14 +136,12 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 
 void Character::TakeDamage(float& amount)
 {
-	//fixed the amount of damage the player will receive
 	if ((health -= amount) <= 0)
 	{
 		Die();
 	}
 }
 
-//When the character dies we update the is_dead property.
 void Character::Die()
 {
 	this->is_dead = true;
@@ -155,7 +149,6 @@ void Character::Die()
 }
 
 
-//In this function we first define who is our character and where he is, after that we get a occupied GridBox index and check if there is any around our character that is occupied.
 bool Character::CheckCloseTargets(Grid* battlefield) const
 {
 	int player_index = this->current_box.index;
@@ -166,7 +159,6 @@ bool Character::CheckCloseTargets(Grid* battlefield) const
 		                             return grid_box.occupied == true && grid_box.index != player_index;
 	                             });
 
-	//here we check if the acquired location of our enemy is in range of our attacks
 	return ((current_box.x_index - 1 == it->x_index && current_box.y_index == it->y_index)
 		|| (current_box.x_index + 1 == it->x_index && current_box.y_index == it->y_index)
 		|| (current_box.x_index == it->x_index && current_box.y_index + 1 == it->y_index)
@@ -194,8 +186,6 @@ void Character::WalkDown(Battlefield* battlefield, int& list_position)
 	Move(battlefield, battlefield->grid->y_length, list_position, "down");
 }
 
-
-//created a main move function that will be used to move the character accordingly to the position requested
 void Character::Move(Battlefield* battlefield, int offset, int& list_position, string direction)
 {
 	current_box.occupied = false;
@@ -209,7 +199,6 @@ void Character::Move(Battlefield* battlefield, int offset, int& list_position, s
 
 void Character::MoveToEnemy(Battlefield* battlefield)
 {
-	//we need to keep the list of player positions updated, so we can print everything on screen accordingly
 	int list_position = 0;
 
 	for (int iterator : battlefield->index_location_of_each_player)
@@ -217,7 +206,6 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 		list_position = iterator == current_box.index ? 1 : list_position;
 	}
 
-	//each one of the ifs below checks where the enemy is and move the character one step closer to it.
 	if (current_box.x_index > target->current_box.x_index)
 	{
 		WalkLeft(battlefield, list_position);
@@ -239,14 +227,12 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 
 void Character::Attack() const
 {
-	//added a crititical chance function so we can use the damage multiplier.
-
 	int critical_chance = Shared::GetRandomInt(0, 100);
 	float damage = 0;
 
 	if (critical_chance < critical_hit_chance)
 	{
-		damage = base_damage * damage_multiplier;
+		damage *= damage_multiplier;
 	}
 	else
 	{

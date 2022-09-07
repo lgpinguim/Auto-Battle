@@ -10,6 +10,9 @@ public:
 	//Created this class to better segregate the responsibilities between classes
 	//This class will be responsible for handling the turns of the game.
 	TurnHandler();
+	void SetupBattlefield();
+	void SetupPlayers();
+	void AllocatePlayersOnBattlefield() const;
 
 	//List of players
 	std::vector<Character*> all_players;
