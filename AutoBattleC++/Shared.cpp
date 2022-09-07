@@ -3,8 +3,6 @@
 
 using namespace std;
 
-//used a more reliable number generator
-
 int Shared::GetRandomInt(int min, int max)
 {
 	uniform_int_distribution<int> distribution(min, max);

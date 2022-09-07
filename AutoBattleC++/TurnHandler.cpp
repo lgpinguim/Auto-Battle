@@ -77,10 +77,8 @@ void TurnHandler::StartGame()
 {
 	SetUpGame();
 
-	//a simple random to determine who will start the game
 	int starting_player = Shared::GetRandomInt(0, 1);
 
-	//here is where our turns will happen
 	while (!game_end)
 	{
 		StartTurn();
@@ -95,7 +93,6 @@ void TurnHandler::StartGame()
 	}
 }
 
-//on the beginning of each turn we check if anyone died and end the game if that is true, if not we continue the turn.
 void TurnHandler::StartTurn()
 {
 	if (all_players[0]->health <= 0)
@@ -129,7 +126,6 @@ void TurnHandler::HandleTurn(Character* player) const
 	battlefield->DrawBattlefield(all_players);
 }
 
-//Here we finish the game and ask if the player wants another round
 void TurnHandler::EndGame()
 {
 	cout << "the game has ended!";
@@ -140,7 +136,6 @@ void TurnHandler::EndGame()
 
 	if (input == "y" || input == "Y")
 	{
-		//here we dealocate and delete our pointers so we wont use more memory each time we run
 		for (const auto player : all_players)
 		{
 			delete player;
