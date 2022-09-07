@@ -36,6 +36,6 @@ void Warrior::Attack()
 		return;
 	}
 
-	ICharacter::Attack();
+	Character::Attack();
 
 }

@@ -30,10 +30,10 @@ void Archer::Attack()
 		std::cout << "Player " << player_index << " has used multiple attacks!\n";
 		int hits = Shared::GetRandomInt(min_attacks, max_attacks);
 		for (int i = 0; i < hits; i++) {
-			ICharacter::Attack();
+			Character::Attack();
 		}
 		return;
 	}
 
-	ICharacter::Attack();
+	Character::Attack();
 }

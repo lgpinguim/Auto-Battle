@@ -1,5 +1,5 @@
 #include "Grid.h"
-#include "ICharacter.h"
+#include "Character.h"
 #include "Types.h"
 #include <vector>
 #include <algorithm>
@@ -13,11 +13,11 @@
 
 using namespace std;
 
-ICharacter::ICharacter()
+Character::Character()
 = default;
 
 
-int ICharacter::ValidateClassInput() const
+int Character::ValidateClassInput() const
 {
 	cout << "Choose Between One of this Classes:\n";
 	cout << "[1] Paladin, [2] Warrior, [3] Cleric, [4] Archer\n";
@@ -45,7 +45,7 @@ int ICharacter::ValidateClassInput() const
 	return class_index;
 }
 
-string ICharacter::CreateCharacterName() const
+string Character::CreateCharacterName() const
 {
 	string inputed_name;
 	bool is_choice_needed = true;
@@ -71,7 +71,7 @@ string ICharacter::CreateCharacterName() const
 
 
 
-void ICharacter::TakeDamage(float& amount)
+void Character::TakeDamage(float& amount)
 {
 	if ((health -= amount) <= 0)
 	{
@@ -79,14 +79,14 @@ void ICharacter::TakeDamage(float& amount)
 	}
 }
 
-void ICharacter::Die()
+void Character::Die()
 {
 	this->is_dead = true;
 	cout << this->name << " is dead! \n";
 }
 
 
-bool ICharacter::CheckCloseTargets(Grid* battlefield) const
+bool Character::CheckCloseTargets(Grid* battlefield) const
 {
 	int player_box_index = this->current_box.index;
 
@@ -103,27 +103,27 @@ bool ICharacter::CheckCloseTargets(Grid* battlefield) const
 }
 
 //this way we can choose where we should go with more simplicity
-void ICharacter::WalkLeft(Battlefield* battlefield, int& list_position)
+void Character::WalkLeft(Battlefield* battlefield, int& list_position)
 {
 	Move(battlefield, -1, list_position, "left");
 }
 
-void ICharacter::WalkRight(Battlefield* battlefield, int& list_position)
+void Character::WalkRight(Battlefield* battlefield, int& list_position)
 {
 	Move(battlefield, 1, list_position, "right");
 }
 
-void ICharacter::WalkUp(Battlefield* battlefield, int& list_position)
+void Character::WalkUp(Battlefield* battlefield, int& list_position)
 {
 	Move(battlefield, -battlefield->grid->y_length, list_position, "up");
 }
 
-void ICharacter::WalkDown(Battlefield* battlefield, int& list_position)
+void Character::WalkDown(Battlefield* battlefield, int& list_position)
 {
 	Move(battlefield, battlefield->grid->y_length, list_position, "down");
 }
 
-void ICharacter::Move(Battlefield* battlefield, int offset, int& list_position, string direction)
+void Character::Move(Battlefield* battlefield, int offset, int& list_position, string direction)
 {
 	current_box.occupied = false;
 	battlefield->grid->grids[current_box.index] = current_box;
@@ -134,7 +134,7 @@ void ICharacter::Move(Battlefield* battlefield, int offset, int& list_position, 
 	cout << "Player " << player_index << " walked " << direction << "\n";
 }
 
-void ICharacter::MoveToEnemy(Battlefield* battlefield)
+void Character::MoveToEnemy(Battlefield* battlefield)
 {
 	int list_position = 0;
 
@@ -162,7 +162,7 @@ void ICharacter::MoveToEnemy(Battlefield* battlefield)
 }
 
 
-void ICharacter::Attack()
+void Character::Attack()
 {
 	int critical_chance = Shared::GetRandomInt(0, 100);
 	float damage = base_damage;

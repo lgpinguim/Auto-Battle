@@ -5,9 +5,9 @@
 #include "Paladin.h"
 #include "Warrior.h"
 
-ICharacter* CharacterFactory::CreateCharacter(int& class_index, std::string& name, int player_index)
+Character* CharacterFactory::CreateCharacter(int& class_index, std::string& name, int player_index)
 {
-	auto character = new ICharacter();
+	auto character = new Character();
 
 	switch (class_index)
 	{

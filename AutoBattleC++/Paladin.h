@@ -1,7 +1,7 @@
 ﻿#pragma once
-#include "ICharacter.h"
+#include "Character.h"
 
-class Paladin : public ICharacter
+class Paladin : public Character
 {
 public:
 

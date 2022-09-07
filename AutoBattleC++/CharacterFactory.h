@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <string>
 
-class ICharacter;
+class Character;
 class Paladin;
 class Warrior;
 class Cleric;
@@ -11,6 +11,6 @@ class CharacterFactory
 {
 public:
 
-	static ICharacter* CreateCharacter(int& class_index, std::string& name, int player_index);
+	static Character* CreateCharacter(int& class_index, std::string& name, int player_index);
 	
 };

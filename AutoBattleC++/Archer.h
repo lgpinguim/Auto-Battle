@@ -1,11 +1,11 @@
 ﻿#pragma once
 #include <string>
 
-#include "ICharacter.h"
+#include "Character.h"
 
 using namespace std;
 
-class Archer : public ICharacter
+class Archer : public Character
 {
 public:
 

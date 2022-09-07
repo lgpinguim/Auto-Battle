@@ -33,5 +33,5 @@ void Cleric::Attack()
 		std::cout << "Player " << player_index << " has healed for " << heal_amount << " hp!\n";
 	}
 
-	ICharacter::Attack();
+	Character::Attack();
 }

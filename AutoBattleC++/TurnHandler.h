@@ -2,7 +2,7 @@
 #include <Vector>
 
 class Battlefield;
-class ICharacter;
+class Character;
 class CharacterFactory;
 
 class TurnHandler
@@ -14,7 +14,7 @@ public:
 	void SetupPlayers();
 	void AllocatePlayersOnBattlefield() const;
 
-	std::vector<ICharacter*> all_players;
+	std::vector<Character*> all_players;
 
 	//Battlefield
 	Battlefield* battlefield{};
@@ -29,7 +29,7 @@ public:
 
 	void StartTurn();
 
-	void HandleTurn(ICharacter* player) const;
+	void HandleTurn(Character* player) const;
 
 	void EndGame();
 };

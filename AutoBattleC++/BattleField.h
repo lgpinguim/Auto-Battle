@@ -1,5 +1,5 @@
 #pragma once
-#include "ICharacter.h"
+#include "Character.h"
 #include <list>
 #include "Grid.h"
 #include "TurnHandler.h"
@@ -23,9 +23,9 @@ public:
 
 	Grid* CreateBattleField(int& lines, int& columns);
 
-	void AlocatePlayer(ICharacter* player);
+	void AlocatePlayer(Character* player);
 
 	void ValidateBattlefieldDimensions(int& lines, int& columns) const;
 
-	void DrawBattlefield(const std::vector<ICharacter*>& all_players) const;
+	void DrawBattlefield(const std::vector<Character*>& all_players) const;
 };

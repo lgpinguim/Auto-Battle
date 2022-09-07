@@ -25,7 +25,7 @@ void TurnHandler::SetupBattlefield()
 
 void TurnHandler::SetupPlayers()
 {
-	auto player_character = new ICharacter();
+	auto player_character = new Character();
 	int class_index = player_character->ValidateClassInput();
 	string name = player_character->CreateCharacterName();
 	player_character = CharacterFactory::CreateCharacter(class_index, name, 1);
@@ -43,7 +43,7 @@ void TurnHandler::SetupPlayers()
 
 void TurnHandler::AllocatePlayersOnBattlefield() const
 {
-	for (ICharacter* player : all_players)
+	for (Character* player : all_players)
 	{
 		battlefield->AlocatePlayer(player);
 	}
@@ -110,7 +110,7 @@ void TurnHandler::StartTurn()
 	}
 }
 
-void TurnHandler::HandleTurn(ICharacter* player) const
+void TurnHandler::HandleTurn(Character* player) const
 {
 	bool can_attack = player->CheckCloseTargets(battlefield->grid);
 	if (can_attack)

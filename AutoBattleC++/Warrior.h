@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <string>
 
-#include "ICharacter.h"
+#include "Character.h"
 
-class Warrior : public ICharacter
+class Warrior : public Character
 {
 public:
 
@@ -14,3 +14,4 @@ public:
 	void Attack() override;
 
 };
+

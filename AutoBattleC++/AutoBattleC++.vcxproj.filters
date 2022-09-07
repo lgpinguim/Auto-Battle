@@ -13,55 +13,61 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Arquivos de Origem\Battlefield">
+      <UniqueIdentifier>{24957718-f4f3-48df-887c-75604041e56a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Character">
+      <UniqueIdentifier>{cf5636d5-41db-4020-96c3-37d17f3d155b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Shared">
+      <UniqueIdentifier>{470d5b85-c58f-433a-ab7d-84db2760cfbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Character">
+      <UniqueIdentifier>{7f47c123-cadd-4ad1-b8f1-e3002463574d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Battlefield">
+      <UniqueIdentifier>{d4859054-51ef-48d0-ad8b-a52f9b6b6c9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AutoBattleC++.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Grid.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Battlefield.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="ICharacter.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Types.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Shared.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="TurnHandler.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Paladin.cpp">
-      <Filter>Arquivos de Origem</Filter>
+    <ClCompile Include="Character.cpp">
+      <Filter>Arquivos de Origem\Character</Filter>
     </ClCompile>
     <ClCompile Include="Warrior.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Paladin.cpp">
+      <Filter>Arquivos de Origem\Character</Filter>
     </ClCompile>
     <ClCompile Include="Cleric.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Character</Filter>
     </ClCompile>
     <ClCompile Include="Archer.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Battlefield.cpp">
+      <Filter>Arquivos de Origem\Battlefield</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Arquivos de Origem\Battlefield</Filter>
     </ClCompile>
     <ClCompile Include="CharacterFactory.cpp">
-      <Filter>Arquivos de Origem</Filter>
+      <Filter>Arquivos de Origem\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared.cpp">
+      <Filter>Arquivos de Origem\Shared</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Grid.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Battlefield.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="ICharacter.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Types.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -71,20 +77,29 @@
     <ClInclude Include="TurnHandler.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="Paladin.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Cleric.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="Archer.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
     </ClInclude>
     <ClInclude Include="CharacterFactory.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Cleric.h">
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Paladin.h">
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
     </ClInclude>
     <ClInclude Include="Warrior.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
+      <Filter>Arquivos de Cabeçalho\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Battlefield.h">
+      <Filter>Arquivos de Cabeçalho\Battlefield</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Arquivos de Cabeçalho\Battlefield</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

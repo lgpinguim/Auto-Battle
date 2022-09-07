@@ -144,7 +144,7 @@
     <ClCompile Include="Battlefield.cpp" />
     <ClCompile Include="CharacterFactory.cpp" />
     <ClCompile Include="Cleric.cpp" />
-    <ClCompile Include="ICharacter.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Paladin.cpp" />
     <ClCompile Include="Shared.cpp" />
@@ -157,7 +157,7 @@
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="CharacterFactory.h" />
     <ClInclude Include="Cleric.h" />
-    <ClInclude Include="ICharacter.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Paladin.h" />
     <ClInclude Include="Shared.h" />

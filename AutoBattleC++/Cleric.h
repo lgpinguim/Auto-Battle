@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <string>
 
-#include "ICharacter.h"
+#include "Character.h"
 
-class Cleric : public ICharacter
+class Cleric : public Character
 {
 public:
 

@@ -3,7 +3,7 @@
 
 #include "Battlefield.h"
 #include "Grid.h"
-#include "ICharacter.h"
+#include "Character.h"
 #include "Types.h"
 
 enum class CharacterClass;
@@ -13,11 +13,11 @@ class Warrior;
 class Cleric;
 class Archer;
 
-class ICharacter
+class Character
 {
 public:
-	virtual ~ICharacter() = default;
-	ICharacter();
+	virtual ~Character() = default;
+	Character();
 
 	std::string name{};
 	float health{};
@@ -27,7 +27,7 @@ public:
 	CharacterClass character_class{};
 	int critical_hit_chance{};
 	int player_index{};
-	ICharacter* target{};
+	Character* target{};
 	bool is_dead{ false };
 	char icon{ 'X' };
 
@@ -37,7 +37,7 @@ public:
 
 	std::string CreateCharacterName() const;
 
-	void SetTarget(ICharacter* t)
+	void SetTarget(Character* t)
 	{
 		target = t;
 	}
