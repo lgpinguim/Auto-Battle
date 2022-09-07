@@ -3,16 +3,21 @@
 
 #include "Battlefield.h"
 #include "Grid.h"
-#include "Character.h"
+#include "ICharacter.h"
 #include "Types.h"
 
 enum class CharacterClass;
 class Battlefield;
+class Paladin;
+class Warrior;
+class Cleric;
+class Archer;
 
-class Character
+class ICharacter
 {
 public:
-	Character();
+	virtual ~ICharacter() = default;
+	ICharacter();
 
 	std::string name{};
 	float health{};
@@ -20,40 +25,44 @@ public:
 	float damage_multiplier{};
 	Types::GridBox current_box;
 	CharacterClass character_class{};
-	int critical_hit_chance{}; 
+	int critical_hit_chance{};
 	int player_index{};
-	Character* target{};
-	bool is_dead{false};
-	char icon{'X'};
+	ICharacter* target{};
+	bool is_dead{ false };
+	char icon{ 'X' };
 
-	static Character* CreateCharacter(int& class_index, std::string& name, int player_index);
-
-	void SetTarget(Character* t)
-	{
-		target = t;
-	}
-
-	void TakeDamage(float& amount);
-
-	void Die();
-
-	bool CheckCloseTargets(Grid* battlefield) const;
-
-	void WalkLeft(Battlefield* battlefield, int& list_position);
-	void WalkRight(Battlefield* battlefield, int& list_position);
-	void WalkUp(Battlefield* battlefield, int& list_position);
-	void WalkDown(Battlefield* battlefield, int& list_position);
-
-	void Move(Battlefield* battlefield, int offset, int& list_position, std::string direction);
+	
 
 	int ValidateClassInput() const;
 
 	std::string CreateCharacterName() const;
 
-	void MoveToEnemy(Battlefield* battlefield);
+	void SetTarget(ICharacter* t)
+	{
+		target = t;
+	}
 
-	void Attack() const;
+	virtual bool CheckCloseTargets(Grid* battlefield) const;
+
+	virtual void MoveToEnemy(Battlefield* battlefield);
+
+	virtual void Attack();
+
+	virtual void TakeDamage(float& amount);
+
+	void Die();
+
+
+private:
+
+	void Move(Battlefield* battlefield, int offset, int& list_position, std::string direction);
+	void WalkLeft(Battlefield* battlefield, int& list_position);
+	void WalkRight(Battlefield* battlefield, int& list_position);
+	void WalkUp(Battlefield* battlefield, int& list_position);
+	void WalkDown(Battlefield* battlefield, int& list_position);
 };
+
+
 
 enum class CharacterClass
 {

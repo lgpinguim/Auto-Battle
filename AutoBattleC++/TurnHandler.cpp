@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "Battlefield.h"
+#include "CharacterFactory.h"
 #include "Shared.h"
 
 
@@ -24,16 +25,16 @@ void TurnHandler::SetupBattlefield()
 
 void TurnHandler::SetupPlayers()
 {
-	auto player_character = new Character();
+	auto player_character = new ICharacter();
 	int class_index = player_character->ValidateClassInput();
 	string name = player_character->CreateCharacterName();
-	player_character = Character::CreateCharacter(class_index, name, 1);
+	player_character = CharacterFactory::CreateCharacter(class_index, name, 1);
 	all_players.push_back(player_character);
 
 	//enemy creation
 	class_index = Shared::GetRandomInt(1, 4);
 	name = "Anakin";
-	const auto enemy_character = Character::CreateCharacter(class_index, name, 2);
+	const auto enemy_character = CharacterFactory::CreateCharacter(class_index, name, 2);
 	all_players.push_back(enemy_character);
 
 	player_character->SetTarget(enemy_character);
@@ -42,7 +43,7 @@ void TurnHandler::SetupPlayers()
 
 void TurnHandler::AllocatePlayersOnBattlefield() const
 {
-	for (Character* player : all_players)
+	for (ICharacter* player : all_players)
 	{
 		battlefield->AlocatePlayer(player);
 	}
@@ -98,7 +99,7 @@ void TurnHandler::StartTurn()
 	}
 	else if (all_players[1]->health <= 0)
 	{
-		cout << "\nCongratulations! " << all_players[0]->name << "won the game!\n";
+		cout << "\nCongratulations! " << all_players[0]->name << " won the game!\n";
 		EndGame();
 	}
 	else if (!game_end)
@@ -109,7 +110,7 @@ void TurnHandler::StartTurn()
 	}
 }
 
-void TurnHandler::HandleTurn(Character* player) const
+void TurnHandler::HandleTurn(ICharacter* player) const
 {
 	bool can_attack = player->CheckCloseTargets(battlefield->grid);
 	if (can_attack)

@@ -1,7 +1,7 @@
 #include "Grid.h"
 #include "Battlefield.h"
 #include "Types.h"
-#include "Character.h"
+#include "ICharacter.h"
 #include <iostream>
 
 
@@ -22,7 +22,7 @@ Grid* Battlefield::CreateBattleField(int& Lines, int& Columns)
 }
 
 
-void Battlefield::AlocatePlayer(Character* player)
+void Battlefield::AlocatePlayer(ICharacter* player)
 {
 	bool searching_valid_position = true;
 
@@ -71,7 +71,7 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 	}
 }
 
-void Battlefield::DrawBattlefield(const vector<Character*>& all_players) const
+void Battlefield::DrawBattlefield(const vector<ICharacter*>& all_players) const
 {
 	int index = 0;
 
