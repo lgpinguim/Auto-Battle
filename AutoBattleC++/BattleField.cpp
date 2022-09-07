@@ -48,7 +48,7 @@ void Battlefield::ValidateBattlefieldDimensions(int& lines, int& columns) const
 
 	while (incorrect_input)
 	{
-		cout << "Please choose the map height: ";
+		cout << "\nPlease choose the map height: ";
 		string height;
 		getline(cin, height);
 

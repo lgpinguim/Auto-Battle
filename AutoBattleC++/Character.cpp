@@ -43,16 +43,16 @@ int Character::ValidateClassInput() const
 
 string Character::CreateCharacterName() const
 {
-	string name;
+	string inputed_name;
 	bool is_choice_needed = true;
 
 	cout << "\nCharacter name: ";
 
 	while (is_choice_needed)
 	{
-		getline(cin, name);
+		getline(cin, inputed_name);
 
-		if (name.empty())
+		if (inputed_name.empty())
 		{
 			cout << "\nInvalid name input, try again: ";
 		}
@@ -62,7 +62,7 @@ string Character::CreateCharacterName() const
 		}
 	}
 
-	return name;
+	return inputed_name;
 }
 
 Character* Character::CreateCharacter(int& class_index, string& name, int player_index)
@@ -79,7 +79,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->player_index = player_index;
 			character->damage_multiplier = 1.1f;
 			character->critical_hit_chance = 10;
-			character->character_class = Types::CharacterClass::Paladin;
+			character->character_class = CharacterClass::Paladin;
 			character->name = name + " the paladin ";
 			character->icon = 'P';
 			cout << "Player " << player_index << " Class Choice: " << "Paladin" << "\n";
@@ -93,7 +93,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->player_index = player_index;
 			character->damage_multiplier = 1.1f;
 			character->critical_hit_chance = 15;
-			character->character_class = Types::CharacterClass::Warrior;
+			character->character_class = CharacterClass::Warrior;
 			character->name = name + " the warrior";
 			character->icon = 'W';
 			cout << "Player " << player_index << " Class Choice: " << "Warrior" << "\n";
@@ -107,7 +107,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->player_index = player_index;
 			character->damage_multiplier = 3.0f;
 			character->critical_hit_chance = 15;
-			character->character_class = Types::CharacterClass::Cleric;
+			character->character_class = CharacterClass::Cleric;
 			character->name = name + " the cleric";
 			character->icon = 'C';
 			cout << "Player " << player_index << " Class Choice: " << "Cleric" << "\n";
@@ -121,7 +121,7 @@ Character* Character::CreateCharacter(int& class_index, string& name, int player
 			character->player_index = player_index;
 			character->damage_multiplier = 1.5f;
 			character->critical_hit_chance = 25;
-			character->character_class = Types::CharacterClass::Archer;
+			character->character_class = CharacterClass::Archer;
 			character->name = name + " the archer";
 			character->icon = 'A';
 			cout << "Player " << player_index << " Class Choice: " << "Archer" << "\n";
@@ -151,12 +151,12 @@ void Character::Die()
 
 bool Character::CheckCloseTargets(Grid* battlefield) const
 {
-	int player_index = this->current_box.index;
+	int player_box_index = this->current_box.index;
 
 	const auto it = find_if(battlefield->grids.begin(), battlefield->grids.end(),
-	                             [&player_index](const Types::GridBox& grid_box)
+	                             [&player_box_index](const Types::GridBox& grid_box)
 	                             {
-		                             return grid_box.occupied == true && grid_box.index != player_index;
+		                             return grid_box.occupied == true && grid_box.index != player_box_index;
 	                             });
 
 	return ((current_box.x_index - 1 == it->x_index && current_box.y_index == it->y_index)
@@ -228,15 +228,11 @@ void Character::MoveToEnemy(Battlefield* battlefield)
 void Character::Attack() const
 {
 	int critical_chance = Shared::GetRandomInt(0, 100);
-	float damage = 0;
+	float damage = base_damage;
 
 	if (critical_chance < critical_hit_chance)
 	{
 		damage *= damage_multiplier;
-	}
-	else
-	{
-		damage = base_damage;
 	}
 
 	cout << "Player " << player_index << " is attacking the player " << target->player_index <<

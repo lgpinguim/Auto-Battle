@@ -6,6 +6,7 @@
 #include "Character.h"
 #include "Types.h"
 
+enum class CharacterClass;
 class Battlefield;
 
 class Character
@@ -13,20 +14,17 @@ class Character
 public:
 	Character();
 
-
-
 	std::string name{};
 	float health{};
 	float base_damage{};
 	float damage_multiplier{};
 	Types::GridBox current_box;
-	Types::CharacterClass character_class{};
+	CharacterClass character_class{};
 	int critical_hit_chance{}; 
 	int player_index{};
 	Character* target{};
 	bool is_dead{false};
 	char icon{'X'};
-
 
 	static Character* CreateCharacter(int& class_index, std::string& name, int player_index);
 
@@ -55,4 +53,12 @@ public:
 	void MoveToEnemy(Battlefield* battlefield);
 
 	void Attack() const;
+};
+
+enum class CharacterClass
+{
+	Paladin = 1,
+	Warrior = 2,
+	Cleric = 3,
+	Archer = 4
 };

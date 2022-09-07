@@ -25,19 +25,15 @@ void TurnHandler::SetupBattlefield()
 void TurnHandler::SetupPlayers()
 {
 	auto player_character = new Character();
-	auto enemy_character = new Character();
-
 	int class_index = player_character->ValidateClassInput();
 	string name = player_character->CreateCharacterName();
-
 	player_character = Character::CreateCharacter(class_index, name, 1);
 	all_players.push_back(player_character);
 
 	//enemy creation
 	class_index = Shared::GetRandomInt(1, 4);
 	name = "Anakin";
-	enemy_character = Character::CreateCharacter(class_index, name, 2);
-
+	const auto enemy_character = Character::CreateCharacter(class_index, name, 2);
 	all_players.push_back(enemy_character);
 
 	player_character->SetTarget(enemy_character);
@@ -145,7 +141,7 @@ void TurnHandler::EndGame()
 
 		delete battlefield;
 
-		cout.clear();
+		system("cls");
 
 		StartGame();
 	}
