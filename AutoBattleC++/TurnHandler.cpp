@@ -111,15 +111,19 @@ void TurnHandler::StartTurn()
 
 void TurnHandler::HandleTurn(Character* player) const
 {
-	const bool can_attack = player->CheckCloseTargets(battlefield->grid);
+	bool can_attack = player->CheckCloseTargets(battlefield->grid);
 	if (can_attack)
 	{
 		player->Attack();
-		return;
 	}
 
-	player->MoveToEnemy(battlefield);
-	battlefield->DrawBattlefield(all_players);
+	else
+	{
+		player->MoveToEnemy(battlefield);
+		battlefield->DrawBattlefield(all_players);
+		can_attack = player->CheckCloseTargets(battlefield->grid);
+		if (can_attack)player->Attack();
+	}
 }
 
 void TurnHandler::EndGame()
